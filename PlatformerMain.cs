@@ -19,6 +19,7 @@ namespace Platformer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player1;
+        Player2 player2;
         Controls controls;
 
         public PlatformerMain()
@@ -38,6 +39,7 @@ namespace Platformer
             // TODO: Add your initialization logic here
 
             player1 = new Player(50, 50, 50, 50);
+            player2 = new Player2(100, 100, 50, 50);
             base.Initialize();
 
             Joystick.Init();
@@ -55,6 +57,7 @@ namespace Platformer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player1.LoadContent(this.Content);
+            player2.LoadContent(this.Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,6 +87,7 @@ namespace Platformer
             //Up, down, left, right affect the coordinates of the sprite
 
             player1.Update(controls, gameTime);
+            player2.Update(controls, gameTime);
 
             base.Update(gameTime);
         }
@@ -99,6 +103,7 @@ namespace Platformer
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             player1.Draw(spriteBatch);
+            player2.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Platformer
 {
-	class Player : Sprite
+	class Player2 : Sprite
     {
 		private bool moving;
 		private bool grounded;
@@ -19,11 +19,11 @@ namespace Platformer
 		public double y_vel;
 		public int movedX;
 		private bool pushing;
-		public double gravity = .5;
-		public int maxFallSpeed = 10;
+		public double gravity = -.5;
+		public int maxFallSpeed = -10;
 		private int jumpPoint = 0;
         
-        public Player(int x, int y, int width, int height)
+        public Player2(int x, int y, int width, int height)
         {
             this.spriteX = x;
             this.spriteY = y;
@@ -78,13 +78,13 @@ namespace Platformer
 		{
 
 			// Sideways Acceleration
-			if (controls.onPress(Keys.Right, Buttons.DPadRight))
+			if (controls.onPress(Keys.D, Buttons.DPadRight))
 				x_accel += speed;
-			else if (controls.onRelease(Keys.Right, Buttons.DPadRight))
+			else if (controls.onRelease(Keys.D, Buttons.DPadRight))
 				x_accel -= speed;
-			if (controls.onPress(Keys.Left, Buttons.DPadLeft))
+			if (controls.onPress(Keys.A, Buttons.DPadLeft))
 				x_accel -= speed;
-			else if (controls.onRelease(Keys.Left, Buttons.DPadLeft))
+			else if (controls.onRelease(Keys.A, Buttons.DPadLeft))
 				x_accel += speed;
 
 			double playerFriction = pushing ? (friction * 3) : friction;
@@ -96,13 +96,13 @@ namespace Platformer
 			if (!grounded)
 			{
 				y_vel += gravity;
-				if (y_vel > maxFallSpeed)
+				if (y_vel < maxFallSpeed)
 					y_vel = maxFallSpeed;
 				spriteY += Convert.ToInt32(y_vel);
 			}
 			else
 			{
-				y_vel = 1;
+				y_vel = -1;
 			}
 
 			grounded = false;
@@ -114,7 +114,7 @@ namespace Platformer
 
 		private void checkYCollisions()
 		{
-			if (spriteY >= 400)
+			if (spriteY <= 100)
 				grounded = true;
 			else
 				grounded = false;
@@ -123,9 +123,9 @@ namespace Platformer
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.Up, Buttons.A) && grounded)
+			if (controls.onPress(Keys.S, Buttons.A) && grounded)
 			{
-				y_vel = -8;
+				y_vel = 8;
 				jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
 				grounded = false;
 			}

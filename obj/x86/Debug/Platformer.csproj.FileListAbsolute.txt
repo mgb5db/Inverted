@@ -21,3 +21,12 @@ C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\De
 C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
 C:\Users\James\git\Inverted\obj\x86\Debug\Platformer.exe
 C:\Users\James\git\Inverted\obj\x86\Debug\Platformer.pdb
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Content\prep2.png
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\SDL.dll
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Platformer.exe
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Platformer.pdb
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\James\git\Inverted\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
