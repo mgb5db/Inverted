@@ -30,3 +30,4 @@ C:\Users\James\git\Inverted\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Tao.Sdl.dll
 C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Lidgren.Network.dll
 C:\Users\James\git\Inverted\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Content\prep22.png

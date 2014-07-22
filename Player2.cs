@@ -60,7 +60,7 @@ namespace Platformer
 
         public void LoadContent(ContentManager content)
         {
-            image = content.Load<Texture2D>("prep2.png");
+            image = content.Load<Texture2D>("prep22.png");
         }
 
         public void Draw(SpriteBatch sb)

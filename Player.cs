@@ -114,7 +114,7 @@ namespace Platformer
 
 		private void checkYCollisions()
 		{
-			if (spriteY >= 400)
+			if (spriteY >= 300)
 				grounded = true;
 			else
 				grounded = false;
