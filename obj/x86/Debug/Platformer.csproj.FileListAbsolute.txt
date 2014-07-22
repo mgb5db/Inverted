@@ -1,0 +1,23 @@
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.exe
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.pdb
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Platformer.exe
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Platformer.pdb
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Content\prep2.png
+C:\Users\Administrator\Desktop\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\SDL.dll
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.exe
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.pdb
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Content\prep2.png
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\SDL.dll
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Platformer.exe
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Platformer.pdb
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\James\Desktop\School Work\CS4730\Platformer\Platformer\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
+C:\Users\James\git\Inverted\obj\x86\Debug\Platformer.exe
+C:\Users\James\git\Inverted\obj\x86\Debug\Platformer.pdb
