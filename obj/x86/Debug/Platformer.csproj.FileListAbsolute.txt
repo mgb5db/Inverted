@@ -51,5 +51,4 @@ C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\prep22.png
 C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\SDL.dll
 C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Platformer.exe
 C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Platformer.pdb
-C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Lidgren.Network.dll
-C:\Users\student\Desktop\Inverted\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\map.png
