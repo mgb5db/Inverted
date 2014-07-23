@@ -23,6 +23,7 @@ namespace Platformer
 		public int maxFallSpeed = -10;
 		private int jumpPoint = 0;
         public Player p1;
+        private bool held;
         
         public Player2(int x, int y, int width, int height)
         {
@@ -33,6 +34,7 @@ namespace Platformer
 			grounded = false;
 			moving = false;
 			pushing = false;
+            held = false;
 
 			// Movement
 			speed = 5;
@@ -65,6 +67,18 @@ namespace Platformer
         public void setP1(Player p1)
         {
             this.p1 = p1;
+        }
+        public bool getGrounded()
+        {
+            return grounded;
+        }
+        public bool getHold()
+        {
+            return held;
+        }
+        public void setHold(bool held)
+        {
+            this.held = held;
         }
 
         public void LoadContent(ContentManager content)
@@ -132,9 +146,9 @@ namespace Platformer
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.S, Buttons.A) && grounded)
+			if (controls.onPress(Keys.S, Buttons.A) && grounded && !p1.getHold())
 			{
-				y_vel = 8;
+				y_vel = 10;
 				jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
 				grounded = false;
 			}
@@ -145,13 +159,25 @@ namespace Platformer
 			//	y_vel /= 2;
 			//}
 		}
-        private void Hold(Controls controls, Player p1)
+        public void Hold(Controls controls, Player p1)
         {
             p1 = this.p1;
-            int sprite2Y = p1.getY();
-            if (spriteY == sprite2Y)
+            int sprite2Y = p1.getY() - 81;
+            if (spriteY + 30 == sprite2Y && (spriteX - 15 <= p1.getX() && spriteX + 5 >= p1.getX()) && p1.getGrounded())
             {
-                this.setY(sprite2Y);
+                held = true;
+            }
+        }
+        public void Drop(Controls controls, Player p1)
+        {
+            if (held)
+            {
+                setY(p1.getY() - 65);
+                setX(p1.getX());
+                if (controls.onPress(Keys.W, Buttons.LeftShoulder) && p1.getGrounded())
+                {
+                    held = false;
+                }
             }
         }
     }

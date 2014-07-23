@@ -88,6 +88,8 @@ namespace Platformer
             //Up, down, left, right affect the coordinates of the sprite
             player1.Hold(controls, player2);
             player1.Drop(controls, player2);
+            player2.Hold(controls, player1);
+            player2.Drop(controls, player1);
             player1.Update(controls, gameTime);
             player2.Update(controls, gameTime);
             base.Update(gameTime);

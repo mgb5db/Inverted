@@ -68,6 +68,18 @@ namespace Platformer
         {
             this.p2 = p2;
         }
+        public bool getGrounded()
+        {
+            return grounded;
+        }
+        public bool getHold()
+        {
+            return held;
+        }
+        public void setHold(bool held)
+        {
+            this.held = held;
+        }
 
         public void LoadContent(ContentManager content)
         {
@@ -134,8 +146,9 @@ namespace Platformer
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.Up, Buttons.A) && grounded && !held)
+			if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
 			{
+                System.Diagnostics.Debug.WriteLine(held);
 				y_vel = -10;
 				jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
 				grounded = false;
@@ -150,8 +163,9 @@ namespace Platformer
         {
             p2 = this.p2;
             int sprite2Y = p2.getY() + 81;
-            if (spriteY - 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()))
+            if (spriteY - 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
             {
+                System.Diagnostics.Debug.WriteLine("Held is True");
                 held = true;
             }
         }
@@ -159,10 +173,11 @@ namespace Platformer
         {
             if (held)
             {
-                p2.setY(spriteY - 65);
-                p2.setX(spriteX);
-                if (controls.onPress(Keys.Down, Buttons.RightShoulder) && grounded)
+                setY(p2.getY() + 65);
+                setX(p2.getX());
+                if (controls.onPress(Keys.Down, Buttons.RightShoulder) && p2.getGrounded())
                 {
+                    System.Diagnostics.Debug.WriteLine("Held is False");
                     held = false;
                 }
             }
