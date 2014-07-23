@@ -22,6 +22,8 @@ namespace Platformer
 		public double gravity = .5;
 		public int maxFallSpeed = 10;
 		private int jumpPoint = 0;
+        public Player2 p2;
+        private bool held;
         
         public Player(int x, int y, int width, int height)
         {
@@ -32,6 +34,7 @@ namespace Platformer
 			grounded = false;
 			moving = false;
 			pushing = false;
+            held = false;
 
 			// Movement
 			speed = 5;
@@ -57,10 +60,18 @@ namespace Platformer
         {
             spriteY = y;
         }
+        public Player2 getP2()
+        {
+            return p2;
+        }
+        public void setP2(Player2 p2)
+        {
+            this.p2 = p2;
+        }
 
         public void LoadContent(ContentManager content)
         {
-            image = content.Load<Texture2D>("prep2.png");
+            image = content.Load<Texture2D>("Aaron.png");
         }
 
         public void Draw(SpriteBatch sb)
@@ -123,18 +134,38 @@ namespace Platformer
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.Up, Buttons.A) && grounded)
+			if (controls.onPress(Keys.Up, Buttons.A) && grounded && !held)
 			{
-				y_vel = -8;
+				y_vel = -10;
 				jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
 				grounded = false;
 			}
-
 			// Cut jump short on button release
 			//else if (controls.onRelease(Keys.Space, Buttons.A) && y_vel < 0)
 			//{
 			//	y_vel /= 2;
 			//}
 		}
+        public void Hold(Controls controls, Player2 p2)
+        {
+            p2 = this.p2;
+            int sprite2Y = p2.getY() + 81;
+            if (spriteY - 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()))
+            {
+                held = true;
+            }
+        }
+        public void Drop(Controls controls, Player2 p2)
+        {
+            if (held)
+            {
+                p2.setY(spriteY - 65);
+                p2.setX(spriteX);
+                if (controls.onPress(Keys.Down, Buttons.RightShoulder) && grounded)
+                {
+                    held = false;
+                }
+            }
+        }
     }
 }

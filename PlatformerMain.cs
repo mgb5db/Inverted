@@ -21,7 +21,6 @@ namespace Platformer
         Player player1;
         Player2 player2;
         Controls controls;
-
         public PlatformerMain()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -38,8 +37,10 @@ namespace Platformer
         {
             // TODO: Add your initialization logic here
 
-            player1 = new Player(50, 50, 50, 50);
-            player2 = new Player2(100, 100, 50, 50);
+            player1 = new Player(50, 50, 50, 75);
+            player2 = new Player2(100, 100, 50, 75);
+            player1.setP2(player2);
+            player2.setP1(player1);
             base.Initialize();
 
             Joystick.Init();
@@ -85,10 +86,10 @@ namespace Platformer
 
             // TODO: Add your update logic here
             //Up, down, left, right affect the coordinates of the sprite
-
+            player1.Hold(controls, player2);
+            player1.Drop(controls, player2);
             player1.Update(controls, gameTime);
             player2.Update(controls, gameTime);
-
             base.Update(gameTime);
         }
 

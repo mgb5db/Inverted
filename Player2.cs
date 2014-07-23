@@ -22,6 +22,7 @@ namespace Platformer
 		public double gravity = -.5;
 		public int maxFallSpeed = -10;
 		private int jumpPoint = 0;
+        public Player p1;
         
         public Player2(int x, int y, int width, int height)
         {
@@ -57,10 +58,18 @@ namespace Platformer
         {
             spriteY = y;
         }
+        public Player getP1()
+        {
+            return p1;
+        }
+        public void setP1(Player p1)
+        {
+            this.p1 = p1;
+        }
 
         public void LoadContent(ContentManager content)
         {
-            image = content.Load<Texture2D>("prep22.png");
+            image = content.Load<Texture2D>("Benny.png");
         }
 
         public void Draw(SpriteBatch sb)
@@ -136,5 +145,14 @@ namespace Platformer
 			//	y_vel /= 2;
 			//}
 		}
+        private void Hold(Controls controls, Player p1)
+        {
+            p1 = this.p1;
+            int sprite2Y = p1.getY();
+            if (spriteY == sprite2Y)
+            {
+                this.setY(sprite2Y);
+            }
+        }
     }
 }
