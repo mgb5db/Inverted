@@ -21,6 +21,7 @@ namespace Platformer
         Player player1;
         Player2 player2;
         Controls controls;
+        Texture2D background;
         public PlatformerMain()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -57,8 +58,10 @@ namespace Platformer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            background = Content.Load<Texture2D>("map");
             player1.LoadContent(this.Content);
             player2.LoadContent(this.Content);
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -101,10 +104,11 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.FromNonPremultiplied(200, 200, 200, 255));
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+            spriteBatch.Draw(background, new Rectangle(-50,40,1000,400),Color.White);
             player1.Draw(spriteBatch);
             player2.Draw(spriteBatch);
             spriteBatch.End();
