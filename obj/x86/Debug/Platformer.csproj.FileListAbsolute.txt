@@ -52,3 +52,6 @@ C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\SDL.dll
 C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Platformer.exe
 C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Platformer.pdb
 C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\map.png
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Content\Aaron.png
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Content\Benny.png
+C:\Users\James\git\Inverted\bin\WindowsGL\Debug\Content\map.png

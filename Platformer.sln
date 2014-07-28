@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer", "Platformer.csproj", "{C125E6D1-FA94-449C-B493-38EBB9423EFC}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Content_Platforms", "Content_Platforms\Content_Platforms.contentproj", "{675CC7E4-6695-479B-ADAD-85DF412D1822}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +19,6 @@ Global
 		{C125E6D1-FA94-449C-B493-38EBB9423EFC}.Release|Any CPU.ActiveCfg = Release|x86
 		{C125E6D1-FA94-449C-B493-38EBB9423EFC}.Release|x86.ActiveCfg = Release|x86
 		{C125E6D1-FA94-449C-B493-38EBB9423EFC}.Release|x86.Build.0 = Release|x86
-		{675CC7E4-6695-479B-ADAD-85DF412D1822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{675CC7E4-6695-479B-ADAD-85DF412D1822}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{675CC7E4-6695-479B-ADAD-85DF412D1822}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{675CC7E4-6695-479B-ADAD-85DF412D1822}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
