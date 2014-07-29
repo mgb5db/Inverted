@@ -218,11 +218,6 @@ namespace Platformer
 
         private void checkYCollisions(List<Rectangle> collisionRects)
         {
-            //if (spriteY >= 300)
-            //grounded = true;
-            //else
-            //grounded = false;
-
             //Reset collision dist
             collisionDist = Vector2.Zero;
 
@@ -242,26 +237,9 @@ namespace Platformer
             }
             //Update the players position
             float a = this.getX() + collisionDist.X;
-            float b = this.getY() + collisionDist.Y;
+            //float b = this.getY() + collisionDist.Y; //Hacky code :)
             this.setX((int)a);
-            this.setY((int)b);
-
-            //for (int i = 0; i < collisionRects.Count; i++)
-            //{
-            //    if (IsColliding(player2.rect, map.collisionRects[i]))
-            //    {
-            //        //If there are multiple collision make sure we only react to the most severe
-            //        if (normal.Length() > collisionDist2.Length())
-            //            collisionDist2 = normal;
-            //    }
-            //}
-            ////Update the players position
-
-            //float c = player2.getX() + collisionDist2.X;
-            //float d = player2.getY() + collisionDist2.Y;
-            //player2.setX((int)c);
-            //player2.setY((int)d);
-            //base.Update(gameTime);
+            //this.setY((int)b);
         }
 		
 
@@ -287,12 +265,6 @@ namespace Platformer
                     grounded = false;
                 }
             }
-			
-			// Cut jump short on button release
-			//else if (controls.onRelease(Keys.Space, Buttons.A) && y_vel < 0)
-			//{
-			//	y_vel /= 2;
-			//}
 		}
         public void Hold(Controls controls)
         {
@@ -300,20 +272,18 @@ namespace Platformer
             if (inverted)
             {
                 
-                int sprite2Y = p2.getY() - 65;
+                int sprite2Y = p2.getY() - 81;
                 if (spriteY > sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
                 {
-                    //Console.WriteLine("held");
                     held = true;
                 }
             }
             else
             {
                 
-                int sprite2Y = p2.getY() + 65;
+                int sprite2Y = p2.getY() + 81;
                 if (spriteY < sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
                 {
-                    //Console.WriteLine("held2");
                     held = true;
                 }
             }
@@ -327,20 +297,21 @@ namespace Platformer
 
                 if (inverted)
                 {
-                    setY(p2.getY() - 65);
+                    setY(p2.getY() - 58);
                     setX(p2.getX());
                     if (controls.onPress(Keys.W, Buttons.LeftShoulder) && p2.getGrounded())
                     {
+                        setY(p2.getY() - 74);
                         held = false;
                     }
                 }
                 else
                 {
-                    setY(p2.getY() + 65);
+                    setY(p2.getY() + 58);
                     setX(p2.getX());
                     if (controls.onPress(Keys.Down, Buttons.RightShoulder) && p2.getGrounded())
                     {
-                        //System.Diagnostics.Debug.WriteLine("Held is False");
+                        setY(p2.getY() + 74);
                         held = false;
                     }
                 }
