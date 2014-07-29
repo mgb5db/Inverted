@@ -25,12 +25,16 @@ namespace Platformer
         Vector2 collisionDist = Vector2.Zero;
         Vector2 collisionDist2 = Vector2.Zero;
         Player player1;
-        Player2 player2;
+        Player player2;
         Controls controls;
         Texture2D background;
         public PlatformerMain()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.ApplyChanges();
+
             Content.RootDirectory = "Content";
         }
 
@@ -44,10 +48,11 @@ namespace Platformer
         {
             // TODO: Add your initialization logic here
 
-            player1 = new Player(100, 100, 50, 75);
-            player2 = new Player2(100, 100, 50, 75);
+            player1 = new Player(100, 100, 50, 75, false);
+            player2 = new Player(100, 100, 50, 75, true);
+            //player2 = new Player2(100, 100, 50, 75);
             player1.setP2(player2);
-            player2.setP1(player1);
+            player2.setP2(player1);
             map = new Platformer.Level();
 
             base.Initialize();
@@ -107,7 +112,7 @@ namespace Platformer
             player2.Hold(controls, player1);
             player2.Drop(controls, player1);
             player1.Update(controls, gameTime, map.collisionRects);
-            player2.Update(controls, gameTime);
+            player2.Update(controls, gameTime, map.collisionRects);
 
             //Reset collision dist
             //collisionDist = Vector2.Zero;
@@ -160,7 +165,7 @@ namespace Platformer
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(-50, 40, 1000, 400), Color.White);
+            //spriteBatch.Draw(background, new Rectangle(-50, 40, 1000, 400), Color.White);
 
             map.DrawMap();
 

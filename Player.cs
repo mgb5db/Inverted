@@ -12,6 +12,7 @@ namespace Platformer
     {
 		private bool moving;
 		private bool grounded;
+        private bool air;
 		private int speed;
 		private int x_accel;
 		private double friction;
@@ -19,26 +20,39 @@ namespace Platformer
 		public double y_vel;
 		public int movedX;
 		private bool pushing;
-		public double gravity = .5;
-		public int maxFallSpeed = 10;
+		public double gravity;
+        public int maxFallSpeed;
 		private int jumpPoint = 0;
-        public Player2 p2;
+        public Player p2;
         private bool held;
         public Rectangle rect;
         private Vector2 normal;
         private Vector2 collisionDist = Vector2.Zero;
+        private bool inverted;
 
-        public Player(int x, int y, int width, int height)
+        public Player(int x, int y, int width, int height, bool inverted)
         {
             this.spriteX = x;
             this.spriteY = y;
             this.spriteWidth = width;
             this.spriteHeight = height;
+            this.inverted = inverted;
 			grounded = false;
 			moving = false;
 			pushing = false;
             held = false;
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
+
+            if (inverted)
+            {
+                gravity = -.5;
+                maxFallSpeed = -10;
+            }
+            else
+            {
+                gravity = .5;
+                maxFallSpeed = 10;
+            }
 
 			// Movement
 			speed = 5;
@@ -64,11 +78,11 @@ namespace Platformer
         {
             spriteY = y;
         }
-        public Player2 getP2()
+        public Player getP2()
         {
             return p2;
         }
-        public void setP2(Player2 p2)
+        public void setP2(Player p2)
         {
             this.p2 = p2;
         }
@@ -87,7 +101,10 @@ namespace Platformer
 
         public void LoadContent(ContentManager content)
         {
-            image = content.Load<Texture2D>("Aaron.png");
+            if(inverted) 
+                image = content.Load<Texture2D>("Benny.png");
+            else
+                image = content.Load<Texture2D>("Aaron.png");
         }
 
         public void Draw(SpriteBatch sb)
@@ -105,14 +122,29 @@ namespace Platformer
 		{
 
 			// Sideways Acceleration
-			if (controls.onPress(Keys.Right, Buttons.DPadRight))
-				x_accel += speed;
-			else if (controls.onRelease(Keys.Right, Buttons.DPadRight))
-				x_accel -= speed;
-			if (controls.onPress(Keys.Left, Buttons.DPadLeft))
-				x_accel -= speed;
-			else if (controls.onRelease(Keys.Left, Buttons.DPadLeft))
-				x_accel += speed;
+            if (inverted)
+            {
+                if (controls.onPress(Keys.D, Buttons.DPadRight))
+                    x_accel += speed;
+                else if (controls.onRelease(Keys.D, Buttons.DPadRight))
+                    x_accel -= speed;
+                if (controls.onPress(Keys.A, Buttons.DPadLeft))
+                    x_accel -= speed;
+                else if (controls.onRelease(Keys.A, Buttons.DPadLeft))
+                    x_accel += speed;
+            }
+            else
+            {
+                if (controls.onPress(Keys.Right, Buttons.DPadRight))
+                    x_accel += speed;
+                else if (controls.onRelease(Keys.Right, Buttons.DPadRight))
+                    x_accel -= speed;
+                if (controls.onPress(Keys.Left, Buttons.DPadLeft))
+                    x_accel -= speed;
+                else if (controls.onRelease(Keys.Left, Buttons.DPadLeft))
+                    x_accel += speed;
+            }
+			
 
 			double playerFriction = pushing ? (friction * 3) : friction;
 			x_vel = x_vel * (1 - playerFriction) + x_accel * .10;
@@ -120,17 +152,35 @@ namespace Platformer
 			spriteX += movedX;
 
 			// Gravity
-			if (!grounded)
-			{
-				y_vel += gravity;
-				if (y_vel > maxFallSpeed)
-					y_vel = maxFallSpeed;
-				spriteY += Convert.ToInt32(y_vel);
-			}
-			else
-			{
-				y_vel = 1;
-			}
+            if (inverted)
+            {
+                if (!grounded)
+                {
+                    y_vel += gravity;
+                    if (y_vel < maxFallSpeed)
+                        y_vel = maxFallSpeed;
+                    spriteY += Convert.ToInt32(y_vel);
+                }
+                else
+                {
+                    y_vel = -1;
+                }
+            }
+            else
+            {
+                if (!grounded)
+                {
+                    y_vel += gravity;
+                    if (y_vel > maxFallSpeed)
+                        y_vel = maxFallSpeed;
+                    spriteY += Convert.ToInt32(y_vel);
+                }
+                else
+                {
+                    y_vel = 1;
+                }
+            }
+			
 
 			grounded = false;
 
@@ -158,7 +208,7 @@ namespace Platformer
                     //If there are multiple collision make sure we only react to the most severe
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
-                    grounded = true;
+                   grounded = true;
                 }
             }
             //Update the players position
@@ -189,20 +239,33 @@ namespace Platformer
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
-			{
-                System.Diagnostics.Debug.WriteLine(held);
-				y_vel = -10;
-				jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
-				grounded = false;
-			}
+            if (inverted)
+            {
+                if (controls.onPress(Keys.S, Buttons.A) && !p2.getHold())
+                {
+                    y_vel = 10;
+                    jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
+                    grounded = false;
+                }
+            }
+            else
+            {
+                if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
+                {
+                    System.Diagnostics.Debug.WriteLine(held);
+                    y_vel = -10;
+                    jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
+                    grounded = false;
+                }
+            }
+			
 			// Cut jump short on button release
 			//else if (controls.onRelease(Keys.Space, Buttons.A) && y_vel < 0)
 			//{
 			//	y_vel /= 2;
 			//}
 		}
-        public void Hold(Controls controls, Player2 p2)
+        public void Hold(Controls controls, Player p2)
         {
             p2 = this.p2;
             int sprite2Y = p2.getY() + 81;
@@ -212,7 +275,7 @@ namespace Platformer
                 held = true;
             }
         }
-        public void Drop(Controls controls, Player2 p2)
+        public void Drop(Controls controls, Player p2)
         {
             if (held)
             {
