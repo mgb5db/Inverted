@@ -10,9 +10,9 @@ namespace Platformer
 {
 	abstract class Sprite
 	{
-		protected int spriteX, spriteY;
-		protected int spriteWidth, spriteHeight;
-		protected Texture2D image;
+		public int spriteX, spriteY;
+		public int spriteWidth, spriteHeight;
+		public Texture2D image;
 
 		public Sprite ()
 		{

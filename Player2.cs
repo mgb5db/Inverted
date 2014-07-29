@@ -24,7 +24,7 @@ namespace Platformer
 		private int jumpPoint = 0;
         public Player p1;
         private bool held;
-        
+        public Rectangle rect;
         public Player2(int x, int y, int width, int height)
         {
             this.spriteX = x;
@@ -132,6 +132,7 @@ namespace Platformer
 
 			// Check up/down collisions, then left/right
 			checkYCollisions();
+            rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
 
 		}
 
@@ -146,7 +147,7 @@ namespace Platformer
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.S, Buttons.A) && grounded && !p1.getHold())
+			if (controls.onPress(Keys.S, Buttons.A) && !p1.getHold())
 			{
 				y_vel = 10;
 				jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
