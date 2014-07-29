@@ -25,6 +25,8 @@ namespace Platformer
         public Player2 p2;
         private bool held;
         public Rectangle rect;
+        private Vector2 normal;
+        private Vector2 collisionDist = Vector2.Zero;
 
         public Player(int x, int y, int width, int height)
         {
@@ -36,7 +38,7 @@ namespace Platformer
 			moving = false;
 			pushing = false;
             held = false;
-            //rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
+            rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
 
 			// Movement
 			speed = 5;
@@ -93,13 +95,13 @@ namespace Platformer
             sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), Color.White);
         }
 
-		public void Update(Controls controls, GameTime gameTime)
+		public void Update(Controls controls, GameTime gameTime, List<Rectangle> collisionRects)
 		{
-			Move (controls);
+			Move (controls, collisionRects);
 			Jump (controls, gameTime);
 		}
 
-		public void Move(Controls controls)
+		public void Move(Controls controls, List<Rectangle> collisionRects)
 		{
 
 			// Sideways Acceleration
@@ -133,23 +135,61 @@ namespace Platformer
 			grounded = false;
 
 			// Check up/down collisions, then left/right
-			checkYCollisions();
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
+			checkYCollisions(collisionRects);
+            
 
 		}
 
-		private void checkYCollisions()
-		{
-			if (spriteY >= 300)
-				grounded = true;
-			else
-				grounded = false;
-		}
+        private void checkYCollisions(List<Rectangle> collisionRects)
+        {
+            //if (spriteY >= 300)
+            //grounded = true;
+            //else
+            //grounded = false;
+
+            //Reset collision dist
+            collisionDist = Vector2.Zero;
+
+            for (int i = 0; i < collisionRects.Count; i++)
+            {
+                if (IsColliding(rect, collisionRects[i]))
+                {
+                    //If there are multiple collision make sure we only react to the most severe
+                    if (normal.Length() > collisionDist.Length())
+                        collisionDist = normal;
+                    grounded = true;
+                }
+            }
+            //Update the players position
+            float a = this.getX() + collisionDist.X;
+            float b = this.getY() + collisionDist.Y;
+            this.setX((int)a);
+            this.setY((int)b);
+
+            //for (int i = 0; i < collisionRects.Count; i++)
+            //{
+            //    if (IsColliding(player2.rect, map.collisionRects[i]))
+            //    {
+            //        //If there are multiple collision make sure we only react to the most severe
+            //        if (normal.Length() > collisionDist2.Length())
+            //            collisionDist2 = normal;
+            //    }
+            //}
+            ////Update the players position
+
+            //float c = player2.getX() + collisionDist2.X;
+            //float d = player2.getY() + collisionDist2.Y;
+            //player2.setX((int)c);
+            //player2.setY((int)d);
+            //base.Update(gameTime);
+        }
+		
 
 		private void Jump(Controls controls, GameTime gameTime)
 		{
 			// Jump on button press
-			if (controls.onPress(Keys.Up, Buttons.A) && !p2.getHold())
+			if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
 			{
                 System.Diagnostics.Debug.WriteLine(held);
 				y_vel = -10;
@@ -184,6 +224,50 @@ namespace Platformer
                     held = false;
                 }
             }
+        }
+
+        private bool IsColliding(Rectangle body1, Rectangle body2)
+        {
+            //Reset the normal vector
+            normal = Vector2.Zero;
+
+            //Get the centre of each body
+            Vector2 body1Centre = new Vector2(body1.X + (body1.Width / 2), body1.Y + (body1.Height / 2));
+            Vector2 body2Centre = new Vector2(body2.X + (body2.Width / 2), body2.Y + (body2.Height / 2));
+
+            //Declare 2 local vectors
+            Vector2 distance, absDistance;
+
+            //xMag and yMag represent the magnitudes of the x and y components of the normal vector
+            float xMag, yMag;
+
+            //Calculate the difference in position of the two rectangles
+            distance = body1Centre - body2Centre;
+
+            //Get the combined half heights/widths of the rects
+            float xAdd = ((body1.Width) + (body2.Width)) / 2.0f;
+            float yAdd = ((body1.Height) + (body2.Height)) / 2.0f;
+
+            //Calculate absDistance, according to distance
+            absDistance.X = (distance.X < 0) ? -distance.X : distance.X;
+            absDistance.Y = (distance.Y < 0) ? -distance.Y : distance.Y;
+
+            //Check if there is a collision
+            if (!((absDistance.X < xAdd) && (absDistance.Y < yAdd)))
+                return false;
+
+            //The magnitude of the normal vector is determined by the overlap in the rectangles.
+            xMag = xAdd - absDistance.X;
+            yMag = yAdd - absDistance.Y;
+
+            //Only adjust the normal vector in the direction of the least significant overlap.
+            if (xMag < yMag)
+                normal.X = (distance.X > 0) ? xMag : -xMag;
+            else
+                normal.Y = (distance.Y > 0) ? yMag : -yMag;
+
+            //There was a collision, return true
+            return true;
         }
     }
 }
