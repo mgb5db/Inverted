@@ -269,10 +269,12 @@ namespace Platformer
 		}
         public void Hold(Controls controls)
         {
+           
             if (inverted)
             {
-                int sprite2Y = p2.getY() - 120;
-                if (spriteY + 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
+                
+                int sprite2Y = p2.getY() - 65;
+                if (spriteY > sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
                 {
                     Console.WriteLine("held");
                     held = true;
@@ -280,10 +282,11 @@ namespace Platformer
             }
             else
             {
-                int sprite2Y = p2.getY() + 120;
-                if (spriteY - 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
+                
+                int sprite2Y = p2.getY() + 65;
+                if (spriteY < sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
                 {
-                    Console.WriteLine("held");
+                    Console.WriteLine("held2");
                     held = true;
                 }
             }
@@ -294,6 +297,7 @@ namespace Platformer
             if (held)
             {
                 
+
                 if (inverted)
                 {
                     setY(p2.getY() - 65);
