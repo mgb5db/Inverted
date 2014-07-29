@@ -250,6 +250,7 @@ namespace Platformer
             {
                 if (controls.onPress(Keys.S, Buttons.A) && grounded && !p2.getHold())
                 {
+                    LoadContent("Bennyjump.png");
                     y_vel = 10;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;
