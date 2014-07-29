@@ -114,8 +114,11 @@ namespace Platformer
 
 		public void Update(Controls controls, GameTime gameTime, List<Rectangle> collisionRects)
 		{
-			Move (controls, collisionRects);
+            Hold(controls);
+            Drop(controls);
+            Move (controls, collisionRects);
 			Jump (controls, gameTime);
+            
 		}
 
 		public void Move(Controls controls, List<Rectangle> collisionRects)
@@ -241,7 +244,7 @@ namespace Platformer
 			// Jump on button press
             if (inverted)
             {
-                if (controls.onPress(Keys.S, Buttons.A) && !p2.getHold())
+                if (controls.onPress(Keys.S, Buttons.A) && grounded && !p2.getHold())
                 {
                     y_vel = 10;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
@@ -252,7 +255,6 @@ namespace Platformer
             {
                 if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
                 {
-                    System.Diagnostics.Debug.WriteLine(held);
                     y_vel = -10;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;
@@ -265,27 +267,53 @@ namespace Platformer
 			//	y_vel /= 2;
 			//}
 		}
-        public void Hold(Controls controls, Player p2)
+        public void Hold(Controls controls)
         {
-            p2 = this.p2;
-            int sprite2Y = p2.getY() + 81;
-            if (spriteY - 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
+            if (inverted)
             {
-                System.Diagnostics.Debug.WriteLine("Held is True");
-                held = true;
+                int sprite2Y = p2.getY() - 120;
+                if (spriteY + 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
+                {
+                    Console.WriteLine("held");
+                    held = true;
+                }
             }
+            else
+            {
+                int sprite2Y = p2.getY() + 120;
+                if (spriteY - 30 == sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
+                {
+                    Console.WriteLine("held");
+                    held = true;
+                }
+            }
+            
         }
-        public void Drop(Controls controls, Player p2)
+        public void Drop(Controls controls)
         {
             if (held)
             {
-                setY(p2.getY() + 65);
-                setX(p2.getX());
-                if (controls.onPress(Keys.Down, Buttons.RightShoulder) && p2.getGrounded())
+                
+                if (inverted)
                 {
-                    System.Diagnostics.Debug.WriteLine("Held is False");
-                    held = false;
+                    setY(p2.getY() - 65);
+                    setX(p2.getX());
+                    if (controls.onPress(Keys.W, Buttons.LeftShoulder) && p2.getGrounded())
+                    {
+                        held = false;
+                    }
                 }
+                else
+                {
+                    setY(p2.getY() + 65);
+                    setX(p2.getX());
+                    if (controls.onPress(Keys.Down, Buttons.RightShoulder) && p2.getGrounded())
+                    {
+                        //System.Diagnostics.Debug.WriteLine("Held is False");
+                        held = false;
+                    }
+                }
+                
             }
         }
 

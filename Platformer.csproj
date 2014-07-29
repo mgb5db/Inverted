@@ -39,7 +39,6 @@
     <Compile Include="Layer.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="PlatformerMain.cs" />
-    <Compile Include="Player2.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
