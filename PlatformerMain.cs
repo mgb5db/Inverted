@@ -31,7 +31,7 @@ namespace Platformer
         public PlatformerMain()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferHeight = 768;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
 
@@ -48,7 +48,7 @@ namespace Platformer
         {
             // TODO: Add your initialization logic here
 
-            player1 = new Player(100, 300, 50, 75, false);
+            player1 = new Player(100, 200, 50, 75, false);
             player2 = new Player(100, 100, 50, 75, true);
             //player2 = new Player2(100, 100, 50, 75);
             player1.setP2(player2);
