@@ -48,8 +48,8 @@ namespace Platformer
         {
             // TODO: Add your initialization logic here
 
-            player1 = new Player(100, 200, 50, 75, false);
-            player2 = new Player(100, 100, 50, 75, true);
+            player1 = new Player(100, 200, 32, 64, false);
+            player2 = new Player(100, 100, 32, 64, true);
             //player2 = new Player2(100, 100, 50, 75);
             player1.setP2(player2);
             player2.setP2(player1);

@@ -29,6 +29,8 @@ namespace Platformer
         private Vector2 normal;
         private Vector2 collisionDist = Vector2.Zero;
         private bool inverted;
+        private ContentManager c;
+        private SpriteEffects flip;
 
         public Player(int x, int y, int width, int height, bool inverted)
         {
@@ -101,49 +103,69 @@ namespace Platformer
 
         public void LoadContent(ContentManager content)
         {
-            if(inverted) 
+            c = content;
+            if (inverted)
                 image = content.Load<Texture2D>("Benny.png");
             else
                 image = content.Load<Texture2D>("Aaron.png");
+
+        }
+
+        public void LoadContent(String imageName)
+        {
+            image = c.Load<Texture2D>(imageName);
         }
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), Color.White);
+            sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), null, Color.White, 0.0f, new Vector2(0 , 0), flip, 0.0f);
         }
 
 		public void Update(Controls controls, GameTime gameTime, List<Rectangle> collisionRects)
 		{
             Hold(controls);
             Drop(controls);
-            Move (controls, collisionRects);
+            Move (controls, collisionRects, gameTime);
 			Jump (controls, gameTime);
             
 		}
 
-		public void Move(Controls controls, List<Rectangle> collisionRects)
+		public void Move(Controls controls, List<Rectangle> collisionRects, GameTime gameTime)
 		{
 
 			// Sideways Acceleration
             if (inverted)
             {
                 if (controls.onPress(Keys.D, Buttons.DPadRight))
+                {
                     x_accel += speed;
+                    flip = SpriteEffects.None;
+                }
                 else if (controls.onRelease(Keys.D, Buttons.DPadRight))
                     x_accel -= speed;
                 if (controls.onPress(Keys.A, Buttons.DPadLeft))
+                {
                     x_accel -= speed;
+                    flip = SpriteEffects.FlipHorizontally;
+                }
                 else if (controls.onRelease(Keys.A, Buttons.DPadLeft))
                     x_accel += speed;
             }
             else
             {
+
                 if (controls.onPress(Keys.Right, Buttons.DPadRight))
+                {
                     x_accel += speed;
+                    flip = SpriteEffects.None;
+                }
                 else if (controls.onRelease(Keys.Right, Buttons.DPadRight))
                     x_accel -= speed;
                 if (controls.onPress(Keys.Left, Buttons.DPadLeft))
+                {
                     x_accel -= speed;
+                    flip = SpriteEffects.FlipHorizontally;
+                }
                 else if (controls.onRelease(Keys.Left, Buttons.DPadLeft))
                     x_accel += speed;
             }
@@ -155,6 +177,7 @@ namespace Platformer
 			spriteX += movedX;
 
 			// Gravity
+
             if (inverted)
             {
                 if (!grounded)
@@ -183,7 +206,6 @@ namespace Platformer
                     y_vel = 1;
                 }
             }
-			
 
 			grounded = false;
 
@@ -211,7 +233,11 @@ namespace Platformer
                     //If there are multiple collision make sure we only react to the most severe
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
-                   grounded = true;
+                    if (inverted)
+                        LoadContent("Benny.png");
+                    else
+                        LoadContent("Aaronstand1.png");
+                    grounded = true;
                 }
             }
             //Update the players position
@@ -255,6 +281,7 @@ namespace Platformer
             {
                 if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
                 {
+                    LoadContent("Aaronjump.png");
                     y_vel = -10;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="scifi_platformTiles_32x32" tilewidth="32" tileheight="32">
+  <image source="../Downloads/scifi_platformTiles_32x32.png" width="1120" height="736"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1zdOA1EAhOFduyceAyiIxwAK4jGAgngK6IingI5YuecCxIpYUTMUFrJE/36Z39JIT982q7eFZ1p1VbUMIrdV+XcwnelpVFVv0pf0JwPJYEMv5aPJWDKeTCSTyZRezOeS+WQhWUyWkmW9mK8nG8lmspVsJzt6Md9PDpLD5Cg5Tk70Yn6eXCSXyVVyndzoxfwuuU8eksfkKXnWi/lLOu9r8pa8Jx/JZ62Xckrv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1BdErv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1BdErv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1BdErv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1BdErv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1BdErv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1BdErv1t0fRKf0bt39QXRK79bdH0Sn9G7d/UF0Su/W3R9Ep/Ru3f1B9Hb/Hcp/yXAyUneeS/fx/+a7VVXtJdO5+5lktu48t5/Tenq3+mnu+ixZyd2vJmt157n9nNbTu9WbTWPMX/n5lX4H85uvfI9vrvxwcA==
+  </data>
+ </layer>
+ <objectgroup color="#ffaa00" name="Object Layer 1" width="100" height="100">
+  <object x="0" y="3106" width="3197" height="94"/>
+  <object x="0" y="3" width="3200" height="58"/>
+  <object x="3" y="3042" width="315" height="58"/>
+  <object x="64" y="3009" width="188" height="97"/>
+ </objectgroup>
+</map>

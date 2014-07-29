@@ -90,3 +90,15 @@ C:\Users\jqw3ha.CSLAB.004\git\Inverted\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\jqw3ha.CSLAB.004\git\Inverted\bin\WindowsGL\Debug\Tao.Sdl.dll
 C:\Users\jqw3ha.CSLAB.004\git\Inverted\bin\WindowsGL\Debug\Lidgren.Network.dll
 C:\Users\jqw3ha.CSLAB.004\git\Inverted\obj\x86\Debug\Platformer.csprojResolveAssemblyReference.cache
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\FloorPanelTiles.png
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\testsheet.png
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\test.txt
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\Aaronjump.png
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\Aaronstand2.png
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\Aaronwalk1.png
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\Aaronwalk2.png
+C:\Users\student\Desktop\Inverted\bin\WindowsGL\Debug\Content\Aaronstand1.png
