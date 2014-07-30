@@ -35,6 +35,8 @@ namespace Platformer
             graphics.PreferredBackBufferWidth = 1280;// ^
             graphics.ApplyChanges();
 
+            //Components.Add(new Menu(this, null));
+
             Content.RootDirectory = "Content";
         }
 

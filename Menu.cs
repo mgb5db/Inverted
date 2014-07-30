@@ -64,9 +64,9 @@ namespace Platformer
             {
                 items = new string[] { "Resume", "Quit Game" };
             }
-            menuItem = Game.Content.Load<SpriteFont>("MenuItem");
+            //menuItem = Game.Content.Load<SpriteFont>("MenuItem");
             //title = Game.Content.Load<Texture2D>("sprites/Title");
-            selectionArrow = Game.Content.Load<Texture2D>("sprites/Selection");
+            //selectionArrow = Game.Content.Load<Texture2D>("sprites/Selection");
             oldState_ = Keyboard.GetState();
             base.Initialize();
         }

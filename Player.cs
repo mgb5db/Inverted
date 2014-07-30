@@ -8,21 +8,21 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Platformer
 {
-	class Player : Sprite
+    class Player : Sprite
     {
-		private bool moving;
-		private bool grounded;
+        private bool moving;
+        private bool grounded;
         private bool air;
-		private int speed;
-		private int x_accel;
-		private double friction;
-		public double x_vel;
-		public double y_vel;
-		public int movedX;
-		private bool pushing;
-		public double gravity;
+        private int speed;
+        private int x_accel;
+        private double friction;
+        public double x_vel;
+        public double y_vel;
+        public int movedX;
+        private bool pushing;
+        public double gravity;
         public int maxFallSpeed;
-		private int jumpPoint = 0;
+        private int jumpPoint = 0;
         public Player p2;
         private bool held;
         public Rectangle rect;
@@ -39,9 +39,9 @@ namespace Platformer
             this.spriteWidth = width;
             this.spriteHeight = height;
             this.inverted = inverted;
-			grounded = false;
-			moving = false;
-			pushing = false;
+            grounded = false;
+            moving = false;
+            pushing = false;
             held = false;
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
 
@@ -56,16 +56,17 @@ namespace Platformer
                 maxFallSpeed = 10;
             }
 
-			// Movement
-			speed = 5;
-			friction = .15;
-			x_accel = 0;
-			x_vel = 0;
-			y_vel = 0;
-			movedX = 0;
+            // Movement
+            speed = 5;
+            friction = .15;
+            x_accel = 0;
+            x_vel = 0;
+            y_vel = 0;
+            movedX = 0;
         }
 
-        public int getX(){
+        public int getX()
+        {
             return spriteX;
         }
         public int getY()
@@ -118,22 +119,22 @@ namespace Platformer
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), null, Color.White, 0.0f, new Vector2(0 , 0), flip, 0.0f);
+            sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), null, Color.White, 0.0f, new Vector2(0, 0), flip, 0.0f);
         }
 
-		public void Update(Controls controls, GameTime gameTime, List<Rectangle> collisionRects)
-		{
+        public void Update(Controls controls, GameTime gameTime, List<Rectangle> collisionRects)
+        {
             Hold(controls);
             Drop(controls);
-            Move (controls, collisionRects, gameTime);
-			Jump (controls, gameTime);
-            
-		}
+            Move(controls, collisionRects, gameTime);
+            Jump(controls, gameTime);
 
-		public void Move(Controls controls, List<Rectangle> collisionRects, GameTime gameTime)
-		{
+        }
 
-			// Sideways Acceleration
+        public void Move(Controls controls, List<Rectangle> collisionRects, GameTime gameTime)
+        {
+
+            // Sideways Acceleration
             if (inverted)
             {
                 if (controls.onPress(Keys.D, Buttons.DPadRight))
@@ -169,60 +170,44 @@ namespace Platformer
                 else if (controls.onRelease(Keys.Left, Buttons.DPadLeft))
                     x_accel += speed;
             }
-			
 
-			double playerFriction = pushing ? (friction * 3) : friction;
-			x_vel = x_vel * (1 - playerFriction) + x_accel * .10;
-			movedX = Convert.ToInt32(x_vel);
-			spriteX += movedX;
 
-			// Gravity
+            double playerFriction = pushing ? (friction * 3) : friction;
+            x_vel = x_vel * (1 - playerFriction) + x_accel * .10;
+            movedX = Convert.ToInt32(x_vel);
+            spriteX += movedX;
 
+            // Gravity
             if (inverted)
             {
-                if (!grounded)
-                {
-                    y_vel += gravity;
-                    if (y_vel < maxFallSpeed)
-                        y_vel = maxFallSpeed;
-                    spriteY += Convert.ToInt32(y_vel);
-                }
-                else
-                {
-                    y_vel = -1;
-                }
+                y_vel += gravity;
+                if (y_vel < maxFallSpeed)
+                    y_vel = maxFallSpeed;
+                spriteY += Convert.ToInt32(y_vel);
             }
             else
             {
-                if (!grounded)
-                {
-                    y_vel += gravity;
-                    if (y_vel > maxFallSpeed)
-                        y_vel = maxFallSpeed;
-                    spriteY += Convert.ToInt32(y_vel);
-                }
-                else
-                {
-                    y_vel = 1;
-                }
+                y_vel += gravity;
+                if (y_vel > maxFallSpeed)
+                    y_vel = maxFallSpeed;
+                spriteY += Convert.ToInt32(y_vel);
             }
 
-			grounded = false;
-
-			// Check up/down collisions, then left/right
+            // Check up/down collisions, then left/right
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
-			checkYCollisions(collisionRects);
-            
+            checkYCollisions(collisionRects);
 
-		}
+
+
+        }
 
         private void checkYCollisions(List<Rectangle> collisionRects)
         {
             //Reset collision dist
             collisionDist = Vector2.Zero;
-
             for (int i = 0; i < collisionRects.Count; i++)
             {
+
                 if (IsColliding(rect, collisionRects[i]))
                 {
                     //If there are multiple collision make sure we only react to the most severe
@@ -232,26 +217,36 @@ namespace Platformer
                         LoadContent("Benny.png");
                     else
                         LoadContent("Aaronstand1.png");
-                    grounded = true;
+                    if (collisionDist.X == 0) 
+                    {
+                        grounded = true;
+                        y_vel = 0;
+                    }
+                    else
+                        grounded = false;
                 }
-            }
-            //Update the players position
-            float a = this.getX() + collisionDist.X;
-            //float b = this.getY() + collisionDist.Y; //Hacky code :)
-            this.setX((int)a);
-            //this.setY((int)b);
-        }
-		
 
-		private void Jump(Controls controls, GameTime gameTime)
-		{
-			// Jump on button press
+            }
+
+            //Update the players position
+            double a = this.getX() + collisionDist.X;
+            double b = this.getY() + collisionDist.Y; //Hacky code :)
+            this.setX((int)a);
+            this.setY((int)b);
+
+
+        }
+
+
+        private void Jump(Controls controls, GameTime gameTime)
+        {
+            // Jump on button press
             if (inverted)
             {
                 if (controls.onPress(Keys.S, Buttons.A) && grounded && !p2.getHold())
                 {
                     LoadContent("Bennyjump.png");
-                    y_vel = 10;
+                    y_vel = 9.8;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;
                 }
@@ -261,18 +256,18 @@ namespace Platformer
                 if (controls.onPress(Keys.Up, Buttons.A) && grounded && !p2.getHold())
                 {
                     LoadContent("Aaronjump.png");
-                    y_vel = -10;
+                    y_vel = -9.8;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;
                 }
             }
-		}
+        }
         public void Hold(Controls controls)
         {
-           
+
             if (inverted)
             {
-                
+
                 int sprite2Y = p2.getY() - 81;
                 if (spriteY > sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
                 {
@@ -281,20 +276,20 @@ namespace Platformer
             }
             else
             {
-                
+
                 int sprite2Y = p2.getY() + 81;
                 if (spriteY < sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded())
                 {
                     held = true;
                 }
             }
-            
+
         }
         public void Drop(Controls controls)
         {
             if (held)
             {
-                
+
 
                 if (inverted)
                 {
@@ -316,12 +311,13 @@ namespace Platformer
                         held = false;
                     }
                 }
-                
+
             }
         }
 
         private bool IsColliding(Rectangle body1, Rectangle body2)
         {
+
             //Reset the normal vector
             normal = Vector2.Zero;
 
@@ -333,14 +329,14 @@ namespace Platformer
             Vector2 distance, absDistance;
 
             //xMag and yMag represent the magnitudes of the x and y components of the normal vector
-            float xMag, yMag;
+            double xMag, yMag;
 
             //Calculate the difference in position of the two rectangles
             distance = body1Centre - body2Centre;
 
             //Get the combined half heights/widths of the rects
-            float xAdd = ((body1.Width) + (body2.Width)) / 2.0f;
-            float yAdd = ((body1.Height) + (body2.Height)) / 2.0f;
+            double xAdd = ((body1.Width) + (body2.Width)) / 2;
+            double yAdd = ((body1.Height) + (body2.Height)) / 2;
 
             //Calculate absDistance, according to distance
             absDistance.X = (distance.X < 0) ? -distance.X : distance.X;
@@ -356,12 +352,13 @@ namespace Platformer
 
             //Only adjust the normal vector in the direction of the least significant overlap.
             if (xMag < yMag)
-                normal.X = (distance.X > 0) ? xMag : -xMag;
+                normal.X = (float)((distance.X > 0) ? xMag : -xMag);
             else
-                normal.Y = (distance.Y > 0) ? yMag : -yMag;
+                normal.Y = (float)((distance.Y > 0) ? yMag : -yMag);
 
-            //There was a collision, return true
+            ////There was a collision, return true
             return true;
         }
+
     }
 }
