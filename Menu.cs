@@ -17,21 +17,6 @@ namespace Platformer
 
 
 {
-
-    //GameLoop gameLoop_;
-    SoundBank soundBank_;
-    GraphicsDeviceManager graphics_;
-    SpriteBatch spriteBatch_;
-    SpriteFont menuItem_;
-    //string[] items_;
-    int selection_;
-    bool gameStart_;
-    Texture2D title_;
-    Texture2D selectionArrow_;
-
-    KeyboardState oldState_;
-
-
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -40,11 +25,25 @@ namespace Platformer
     /// and the gameLoop garbage collected.
     public class Menu : Microsoft.Xna.Framework.DrawableGameComponent
     {
+
+        GameLoop gameLoop;
+        SoundBank soundBank;
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        SpriteFont menuItem;
+        string[] items;
+        int selection;
+        bool gameStart;
+        Texture2D title;
+        Texture2D selectionArrow;
+
+        KeyboardState oldState_;
+
         public Menu(Game game, GameLoop gameLoop)
             : base(game)
         {
-            gameLoop_ = gameLoop;
-            gameStart_ = (gameLoop == null);
+            this.gameLoop = gameLoop;
+            gameStart = (gameLoop == null);
         }
 
         /// <summary>
@@ -53,21 +52,21 @@ namespace Platformer
         /// </summary>
         public override void Initialize()
         {
-            spriteBatch_ = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
-            graphics_ = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
-            soundBank_ = (SoundBank)Game.Services.GetService(typeof(SoundBank));
-            selection_ = 0;
-            if (gameLoop_ == null)
+            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
+            soundBank = (SoundBank)Game.Services.GetService(typeof(SoundBank));
+            selection = 0;
+            if (gameLoop == null)
             {
-                items_ = new string[] { "New Game", "High Scores", "Quit" };
+                items = new string[] { "New Game", "High Scores", "Quit" };
             }
             else
             {
-                items_ = new string[] { "Resume", "Quit Game" };
+                items = new string[] { "Resume", "Quit Game" };
             }
-            menuItem_ = Game.Content.Load<SpriteFont>("MenuItem");
-            title_ = Game.Content.Load<Texture2D>("sprites/Title");
-            selectionArrow_ = Game.Content.Load<Texture2D>("sprites/Selection");
+            menuItem = Game.Content.Load<SpriteFont>("MenuItem");
+            //title = Game.Content.Load<Texture2D>("sprites/Title");
+            selectionArrow = Game.Content.Load<Texture2D>("sprites/Selection");
             oldState_ = Keyboard.GetState();
             base.Initialize();
         }
@@ -81,10 +80,10 @@ namespace Platformer
             base.Update(gameTime);
             // Wonder why we test for this condition? Just replace gameStart_ by true and
             // try running the game. The answer should be instantaneous.
-            if (gameStart_)
+            if (gameStart)
             {
-                soundBank_.PlayCue("NewLevel");
-                gameStart_ = false;
+                //soundBank.PlayCue("NewLevel");
+                gameStart = false;
             }
 
             KeyboardState newState = Keyboard.GetState();
@@ -97,15 +96,15 @@ namespace Platformer
             // Scroll through menu items
             if (newPressedKeys.Contains(Keys.Down))
             {
-                selection_++;
-                selection_ %= items_.Length;
-                soundBank_.PlayCue("PacMAnEat1");
+                selection++;
+                selection %= items.Length;
+                //soundBank.PlayCue("PacMAnEat1");
             }
             else if (newPressedKeys.Contains(Keys.Up))
             {
-                selection_--;
-                selection_ = (selection_ < 0 ? items_.Length - 1 : selection_);
-                soundBank_.PlayCue("PacManEat2");
+                selection--;
+                selection = (selection < 0 ? items.Length - 1 : selection);
+                //soundBank.PlayCue("PacManEat2");
             }
             else if (newPressedKeys.Contains(Keys.Enter))
             {
@@ -127,51 +126,51 @@ namespace Platformer
             base.Draw(gameTime);
 
             // The menu is a main component, so it is responsible for initializing the sprite batch each frame
-            spriteBatch_.Begin();
+            spriteBatch.Begin();
 
             // Draw title
-            spriteBatch_.Draw(title_, new Vector2((graphics_.PreferredBackBufferWidth / 2) - (title_.Width / 2), 75), Color.White);
+            spriteBatch.Draw(title, new Vector2((graphics.PreferredBackBufferWidth / 2) - (title.Width / 2), 75), Color.White);
 
             // Draw items
             Vector2 itemPosition;
-            itemPosition.X = (graphics_.PreferredBackBufferWidth / 2) - 100;
-            for (int i = 0; i < items_.Length; i++)
+            itemPosition.X = (graphics.PreferredBackBufferWidth / 2) - 100;
+            for (int i = 0; i < items.Length; i++)
             {
 
-                itemPosition.Y = (graphics_.PreferredBackBufferHeight / 2) - 60 + (60 * i);
-                if (i == selection_)
+                itemPosition.Y = (graphics.PreferredBackBufferHeight / 2) - 60 + (60 * i);
+                if (i == selection)
                 {
-                    spriteBatch_.Draw(selectionArrow_, new Vector2(itemPosition.X - 50, itemPosition.Y), Color.White);
+                    spriteBatch.Draw(selectionArrow, new Vector2(itemPosition.X - 50, itemPosition.Y), Color.White);
                 }
-                spriteBatch_.DrawString(menuItem_, items_[i], itemPosition, Color.Yellow);
+                spriteBatch.DrawString(menuItem, items[i], itemPosition, Color.Yellow);
             }
 
-            spriteBatch_.End();
+            spriteBatch.End();
         }
 
         void menuAction()
         {
             Game.Components.Remove(this);
-            switch (items_[selection_])
+            switch (items[selection])
             {
                 case ("Resume"):
-                    Game.Components.Add(gameLoop_);
+                    Game.Components.Add(gameLoop);
                     break;
                 case ("New Game"):
                     Game.Components.Add(new GameLoop(Game));
                     break;
-                case ("High Scores"):
-                    Game.Components.Add(new HighScores(Game));
-                    break;
+                //case ("High Scores"):
+                //    Game.Components.Add(new HighScores(Game));
+                //    break;
                 case ("Quit"):
                     Game.Exit();
                     break;
                 case ("Quit Game"):
                     Game.Components.Add(new Menu(Game, null));
-                    SaveHighScore(gameLoop_.Score);
+                    //SaveHighScore(gameLoop_.Score);
                     break;
                 default:
-                    throw new ArgumentException("\"" + items_[selection_] + "\" is not a valid case");
+                    throw new ArgumentException("\"" + items[selection] + "\" is not a valid case");
 
             }
         }
@@ -180,27 +179,27 @@ namespace Platformer
         /// Keep a history of the best 10 scores
         /// </summary>
         /// <param name="highScore">New score to save, might make it inside the list, might not.</param>
-        public static void SaveHighScore(int highScore)
-        {
-            const string fileName = "highscores.txt";
-            if (!File.Exists(fileName))
-            {
-                File.WriteAllLines(fileName, new string[] { highScore.ToString() });
-            }
-            else
-            {
-                List<string> contents = File.ReadAllLines(fileName).ToList<string>();
-                contents.Add(highScore.ToString());
-                if (contents.Count >= 10)
-                {
-                    contents.Sort((a, b) => Convert.ToInt32(a).CompareTo(Convert.ToInt32(b)));
-                    while (contents.Count > 10)
-                    {
-                        contents.RemoveAt(0);
-                    }
-                }
-                File.WriteAllLines(fileName, contents.ToArray());
-            }
-        }
+        //public static void SaveHighScore(int highScore)
+        //{
+        //    const string fileName = "highscores.txt";
+        //    if (!File.Exists(fileName))
+        //    {
+        //        File.WriteAllLines(fileName, new string[] { highScore.ToString() });
+        //    }
+        //    else
+        //    {
+        //        List<string> contents = File.ReadAllLines(fileName).ToList<string>();
+        //        contents.Add(highScore.ToString());
+        //        if (contents.Count >= 10)
+        //        {
+        //            contents.Sort((a, b) => Convert.ToInt32(a).CompareTo(Convert.ToInt32(b)));
+        //            while (contents.Count > 10)
+        //            {
+        //                contents.RemoveAt(0);
+        //            }
+        //        }
+        //        File.WriteAllLines(fileName, contents.ToArray());
+        //    }
+        //}
     }
 }
