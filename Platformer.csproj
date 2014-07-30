@@ -36,8 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls.cs" />
+    <Compile Include="GameLoop.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Layer.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Menu.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="PlatformerMain.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

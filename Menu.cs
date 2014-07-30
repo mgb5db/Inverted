@@ -18,7 +18,7 @@ namespace Platformer
 
 {
 
-    GameLoop gameLoop_;
+    //GameLoop gameLoop_;
     SoundBank soundBank_;
     GraphicsDeviceManager graphics_;
     SpriteBatch spriteBatch_;
