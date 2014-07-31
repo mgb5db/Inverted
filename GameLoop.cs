@@ -42,12 +42,8 @@ namespace Platformer
             Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
             controls = new Controls();
 
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            //spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
 
             // TODO: use this.Content to load your game content here
@@ -60,7 +56,7 @@ namespace Platformer
             player1.LoadContent(this.Game.Content);
             player2.LoadContent(this.Game.Content);
 
-            base.LoadContent();
+            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
@@ -72,7 +68,12 @@ namespace Platformer
                 Game.Exit();
 
             if (controls.onPress(Keys.Back, Buttons.Back))
-                Initialize();
+            {
+                Console.WriteLine("RESET?");
+                this.Initialize();
+                
+            }
+                
 
             // TODO: Add your update logic here
             //Up, down, left, right affect the coordinates of the sprite

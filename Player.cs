@@ -104,6 +104,7 @@ namespace Platformer
 
         public void LoadContent(ContentManager content)
         {
+
             c = content;
             if (inverted)
                 image = content.Load<Texture2D>("Benny.png");
@@ -190,12 +191,20 @@ namespace Platformer
                 y_vel += gravity;
                 if (y_vel > maxFallSpeed)
                     y_vel = maxFallSpeed;
-                spriteY += Convert.ToInt32(y_vel);
+                spriteY += Convert.ToInt32(y_vel);  
             }
 
             // Check up/down collisions, then left/right
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
             checkYCollisions(collisionRects);
+
+            if (!grounded)
+            {
+                if (inverted)
+                    LoadContent("Bennyjump.png");
+                else
+                    LoadContent("Aaronjump.png");
+            }
 
 
 
@@ -213,20 +222,24 @@ namespace Platformer
                     //If there are multiple collision make sure we only react to the most severe
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
-                    if (inverted)
-                        LoadContent("Benny.png");
-                    else
-                        LoadContent("Aaronstand1.png");
                     if (collisionDist.X == 0) 
                     {
                         grounded = true;
                         y_vel = 0;
+                        if (inverted)
+                            LoadContent("Benny.png");
+                        else
+                            LoadContent("Aaronstand1.png");
                     }
                     else
+                    {
                         grounded = false;
+                    }
+                        
                 }
 
             }
+            
 
             //Update the players position
             double a = this.getX() + collisionDist.X;
