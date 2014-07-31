@@ -31,6 +31,7 @@ namespace Platformer
         private bool inverted;
         private ContentManager c;
         private SpriteEffects flip;
+        private bool inAir;
 
         public Player(int x, int y, int width, int height, bool inverted)
         {
@@ -43,6 +44,7 @@ namespace Platformer
             moving = false;
             pushing = false;
             held = false;
+            inAir = true;
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
 
             if (inverted)
@@ -194,11 +196,8 @@ namespace Platformer
                 spriteY += Convert.ToInt32(y_vel);  
             }
 
-            // Check up/down collisions, then left/right
-            rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
-            checkYCollisions(collisionRects);
-
-            if (!grounded)
+            //grounded = false;
+            if (inAir)
             {
                 if (inverted)
                     LoadContent("Bennyjump.png");
@@ -207,6 +206,11 @@ namespace Platformer
             }
 
 
+            // Check up/down collisions, then left/right
+            rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
+            checkYCollisions(collisionRects);
+            
+
 
         }
 
@@ -214,17 +218,20 @@ namespace Platformer
         {
             //Reset collision dist
             collisionDist = Vector2.Zero;
+            bool collided = false;
             for (int i = 0; i < collisionRects.Count; i++)
             {
 
                 if (IsColliding(rect, collisionRects[i]))
                 {
+                    collided = true;
                     //If there are multiple collision make sure we only react to the most severe
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
                     if (collisionDist.X == 0) 
                     {
                         grounded = true;
+                        inAir = false;
                         y_vel = 0;
                         if (inverted)
                             LoadContent("Benny.png");
@@ -239,6 +246,8 @@ namespace Platformer
                 }
 
             }
+            if (!collided)
+                inAir = true;
             
 
             //Update the players position

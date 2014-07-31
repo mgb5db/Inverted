@@ -55,16 +55,6 @@ namespace Platformer
             //soundBank = (SoundBank)Game.Services.GetService(typeof(SoundBank));
             selection = 0;
             items = new string[] { "New Game", "Exit" };
-            //if (gameLoop == null)
-            //{
-            //    items = new string[] { "New Game", "High Scores", "Quit" };
-            //}
-            //else
-            //{
-            //    items = new string[] { "Resume", "Quit Game" };
-            //}
-            //menuItem = Game.Content.Load<SpriteFont>("MenuItem");
-            //title = Game.Content.Load<Texture2D>("sprites/Title");
             oldState_ = Keyboard.GetState();
             base.Initialize();
         }
@@ -74,8 +64,6 @@ namespace Platformer
             //spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
-
-            Console.WriteLine("LOAD!");
 
             menubg = Game.Content.Load<Texture2D>("MainMenu");
             selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
@@ -141,30 +129,13 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
-
             // The menu is a main component, so it is responsible for initializing the sprite batch each frame
             spriteBatch.Begin();
 
             // Draw title
-            //spriteBatch.Draw(title, new Vector2((graphics.PreferredBackBufferWidth / 2) - (title.Width / 2), 75), Color.White);
             spriteBatch.Draw(menubg, new Vector2(0, 0));
             
-
             // Draw items
-            //Vector2 itemPosition;
-            //itemPosition.X = (graphics.PreferredBackBufferWidth / 2) - 100;
-            //for (int i = 0; i < items.Length; i++)
-            //{
-
-            //    itemPosition.Y = (graphics.PreferredBackBufferHeight / 2) - 60 + (60 * i);
-            //    if (i == selection)
-            //    {
-            //        spriteBatch.Draw(selectionArrow, new Vector2(itemPosition.X - 50, itemPosition.Y), Color.White);
-            //    }
-            //    spriteBatch.DrawString(menuItem, items[i], itemPosition, Color.Yellow);
-            //}
-            
             if (selection == 0)
             {
                 spriteBatch.Draw(selectionArrow, arrowLocation);
@@ -175,6 +146,8 @@ namespace Platformer
             }  
             
             spriteBatch.End();
+
+            base.Draw(gameTime);
         }
 
         void menuAction()
@@ -182,53 +155,17 @@ namespace Platformer
             Game.Components.Remove(this);
             switch (items[selection])
             {
-                //case ("Resume"):
-                //    Game.Components.Add(gameLoop);
-                //    break;
                 case ("New Game"):
                     Game.Components.Add(new GameLoop(Game));
                     break;
-                //case ("High Scores"):
-                //    Game.Components.Add(new HighScores(Game));
-                //    break;
                 case ("Exit"):
                     Game.Exit();
                     break;
-                //case ("Quit Game"):
-                //    Game.Components.Add(new Menu(Game, null));
-                //    SaveHighScore(gameLoop_.Score);
-                //    break;
                 default:
                     throw new ArgumentException("\"" + items[selection] + "\" is not a valid case");
 
             }
         }
 
-        /// <summary>
-        /// Keep a history of the best 10 scores
-        /// </summary>
-        /// <param name="highScore">New score to save, might make it inside the list, might not.</param>
-        //public static void SaveHighScore(int highScore)
-        //{
-        //    const string fileName = "highscores.txt";
-        //    if (!File.Exists(fileName))
-        //    {
-        //        File.WriteAllLines(fileName, new string[] { highScore.ToString() });
-        //    }
-        //    else
-        //    {
-        //        List<string> contents = File.ReadAllLines(fileName).ToList<string>();
-        //        contents.Add(highScore.ToString());
-        //        if (contents.Count >= 10)
-        //        {
-        //            contents.Sort((a, b) => Convert.ToInt32(a).CompareTo(Convert.ToInt32(b)));
-        //            while (contents.Count > 10)
-        //            {
-        //                contents.RemoveAt(0);
-        //            }
-        //        }
-        //        File.WriteAllLines(fileName, contents.ToArray());
-        //    }
-        //}
     }
 }

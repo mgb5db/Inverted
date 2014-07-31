@@ -48,20 +48,7 @@ namespace Platformer
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
-            //player1 = new Player(100, 200, 32, 64, false);
-            //player2 = new Player(100, 100, 32, 64, true);
-            //player1.setP2(player2);
-            //player2.setP2(player1);
-            //map = new Platformer.Level();
-
             base.Initialize();
-
-            //Joystick.Init();
-            //Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
-            //controls = new Controls();
-
         }
 
         /// <summary>
@@ -74,17 +61,6 @@ namespace Platformer
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);
             Services.AddService(typeof(GraphicsDeviceManager), graphics);
-
-            //background = Content.Load<Texture2D>("map");
-            //tileSheet = Content.Load<Texture2D>("FloorPanelTiles");
-            //map.LoadMap("Content/test.txt");
-            //map.LoadTileSet(tileSheet);
-            //map.PopulateCollisionLayer();
-
-            //player1.LoadContent(this.Content);
-            //player2.LoadContent(this.Content);
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -103,20 +79,6 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            ////set our keyboardstate tracker update can change the gamestate on every cycle
-            //controls.Update();
-
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
-
-            //if (controls.onPress(Keys.Back, Buttons.Back))
-            //    Initialize();
-
-            //// TODO: Add your update logic here
-            ////Up, down, left, right affect the coordinates of the sprite
-            //player1.Update(controls, gameTime, map.collisionRects);
-            //player2.Update(controls, gameTime, map.collisionRects);
-
             base.Update(gameTime);
         }
 
@@ -127,16 +89,6 @@ namespace Platformer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.FromNonPremultiplied(200, 200, 200, 255));
-
-            //// TODO: Add your drawing code here
-            //spriteBatch.Begin();
-            ////spriteBatch.Draw(background, new Rectangle(-50, 40, 1000, 400), Color.White);
-
-            //map.DrawMap();
-
-            //player1.Draw(spriteBatch);
-            //player2.Draw(spriteBatch);
-            //spriteBatch.End();
 
             base.Draw(gameTime);
         }

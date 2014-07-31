@@ -42,7 +42,7 @@ namespace Platformer
             Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
             controls = new Controls();
 
-            //spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
 
@@ -64,17 +64,17 @@ namespace Platformer
             //set our keyboardstate tracker update can change the gamestate on every cycle
             controls.Update();
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Game.Exit();
-
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
-                Console.WriteLine("RESET?");
-                this.Initialize();
-                
+                this.Initialize();   
+            }
+
+            if (controls.onPress(Keys.Escape, Buttons.Start))
+            {
+                Game.Components.Add(new Menu(this.Game, null));
+                this.Dispose();
             }
                 
-
             // TODO: Add your update logic here
             //Up, down, left, right affect the coordinates of the sprite
             player1.Update(controls, gameTime, map.collisionRects);
@@ -85,9 +85,9 @@ namespace Platformer
 
         public override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.FromNonPremultiplied(200, 200, 200, 255));
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            //spriteBatch.Draw(background, new Rectangle(-50, 40, 1000, 400), Color.White);
 
             map.DrawMap();
 
