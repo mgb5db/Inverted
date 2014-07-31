@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.GamerServices;
 using Tao.Sdl;
 #endregion
 
@@ -18,16 +19,14 @@ namespace Platformer
     public class PlatformerMain : Game
     {
         GraphicsDeviceManager graphics;
-        public static SpriteBatch spriteBatch;
-        public static Texture2D tileSheet;
-        Level map;
-        Vector2 normal;
-        Vector2 collisionDist = Vector2.Zero;
-        Vector2 collisionDist2 = Vector2.Zero;
-        Player player1;
-        Player player2;
-        Controls controls;
-        Texture2D background;
+        SpriteBatch spriteBatch;
+        // public static Texture2D tileSheet;
+        
+        //Level map;
+        //Player player1;
+        //Player player2;
+        //Controls controls;
+        //Texture2D background;
         public PlatformerMain()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -35,7 +34,7 @@ namespace Platformer
             graphics.PreferredBackBufferWidth = 1280;// ^
             graphics.ApplyChanges();
 
-            //Components.Add(new Menu(this, null));
+            Components.Add(new Menu(this, null));
 
             Content.RootDirectory = "Content";
         }
@@ -51,17 +50,17 @@ namespace Platformer
         {
             // TODO: Add your initialization logic here
 
-            player1 = new Player(100, 200, 32, 64, false);
-            player2 = new Player(100, 100, 32, 64, true);
-            player1.setP2(player2);
-            player2.setP2(player1);
-            map = new Platformer.Level();
+            //player1 = new Player(100, 200, 32, 64, false);
+            //player2 = new Player(100, 100, 32, 64, true);
+            //player1.setP2(player2);
+            //player2.setP2(player1);
+            //map = new Platformer.Level();
 
             base.Initialize();
 
-            Joystick.Init();
-            Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
-            controls = new Controls();
+            //Joystick.Init();
+            //Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
+            //controls = new Controls();
 
         }
 
@@ -73,14 +72,17 @@ namespace Platformer
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            background = Content.Load<Texture2D>("map");
-            tileSheet = Content.Load<Texture2D>("FloorPanelTiles");
-            map.LoadMap("Content/test.txt");
-            map.LoadTileSet(tileSheet);
-            map.PopulateCollisionLayer();
+            Services.AddService(typeof(SpriteBatch), spriteBatch);
+            Services.AddService(typeof(GraphicsDeviceManager), graphics);
 
-            player1.LoadContent(this.Content);
-            player2.LoadContent(this.Content);
+            //background = Content.Load<Texture2D>("map");
+            //tileSheet = Content.Load<Texture2D>("FloorPanelTiles");
+            //map.LoadMap("Content/test.txt");
+            //map.LoadTileSet(tileSheet);
+            //map.PopulateCollisionLayer();
+
+            //player1.LoadContent(this.Content);
+            //player2.LoadContent(this.Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -101,19 +103,19 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //set our keyboardstate tracker update can change the gamestate on every cycle
-            controls.Update();
+            ////set our keyboardstate tracker update can change the gamestate on every cycle
+            //controls.Update();
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
 
-            if (controls.onPress(Keys.Back, Buttons.Back))
-                Initialize();
+            //if (controls.onPress(Keys.Back, Buttons.Back))
+            //    Initialize();
 
-            // TODO: Add your update logic here
-            //Up, down, left, right affect the coordinates of the sprite
-            player1.Update(controls, gameTime, map.collisionRects);
-            player2.Update(controls, gameTime, map.collisionRects);
+            //// TODO: Add your update logic here
+            ////Up, down, left, right affect the coordinates of the sprite
+            //player1.Update(controls, gameTime, map.collisionRects);
+            //player2.Update(controls, gameTime, map.collisionRects);
 
             base.Update(gameTime);
         }
@@ -126,15 +128,15 @@ namespace Platformer
         {
             GraphicsDevice.Clear(Color.FromNonPremultiplied(200, 200, 200, 255));
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            //spriteBatch.Draw(background, new Rectangle(-50, 40, 1000, 400), Color.White);
+            //// TODO: Add your drawing code here
+            //spriteBatch.Begin();
+            ////spriteBatch.Draw(background, new Rectangle(-50, 40, 1000, 400), Color.White);
 
-            map.DrawMap();
+            //map.DrawMap();
 
-            player1.Draw(spriteBatch);
-            player2.Draw(spriteBatch);
-            spriteBatch.End();
+            //player1.Draw(spriteBatch);
+            //player2.Draw(spriteBatch);
+            //spriteBatch.End();
 
             base.Draw(gameTime);
         }

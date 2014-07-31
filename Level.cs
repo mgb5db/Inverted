@@ -105,7 +105,7 @@ namespace Platformer
                             bounds = tileSet[TileLayer1.layer[y, x] - 1];
                             //Console.WriteLine(TileLayer1.layer[y, x]);
                             // Draw it in screen space
-                            PlatformerMain.spriteBatch.Draw(PlatformerMain.tileSheet, new Vector2(((y - drawOffset.X) * tileWidth),
+                            GameLoop.spriteBatch.Draw(GameLoop.tileSheet, new Vector2(((y - drawOffset.X) * tileWidth),
                                 ((x - drawOffset.Y) * tileHeight)), bounds, Color.White);
                         }
                     }

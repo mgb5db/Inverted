@@ -23,7 +23,7 @@ namespace Platformer
     /// Optionally takes a GameLoop argument, when the menu must be able to
     /// resume the current GameLoop. Otherwise, the reference would be lost
     /// and the gameLoop garbage collected.
-    public class Menu : Microsoft.Xna.Framework.DrawableGameComponent
+    public class Menu : DrawableGameComponent
     {
 
         GameLoop gameLoop;
@@ -36,6 +36,8 @@ namespace Platformer
         bool gameStart;
         Texture2D title;
         Texture2D selectionArrow;
+        Texture2D menubg;
+        Vector2 arrowLocation;
 
         KeyboardState oldState_;
 
@@ -52,23 +54,36 @@ namespace Platformer
         /// </summary>
         public override void Initialize()
         {
-            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
-            graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
-            soundBank = (SoundBank)Game.Services.GetService(typeof(SoundBank));
+            //soundBank = (SoundBank)Game.Services.GetService(typeof(SoundBank));
             selection = 0;
-            if (gameLoop == null)
-            {
-                items = new string[] { "New Game", "High Scores", "Quit" };
-            }
-            else
-            {
-                items = new string[] { "Resume", "Quit Game" };
-            }
+            items = new string[] { "New Game", "Exit" };
+            //if (gameLoop == null)
+            //{
+            //    items = new string[] { "New Game", "High Scores", "Quit" };
+            //}
+            //else
+            //{
+            //    items = new string[] { "Resume", "Quit Game" };
+            //}
             //menuItem = Game.Content.Load<SpriteFont>("MenuItem");
             //title = Game.Content.Load<Texture2D>("sprites/Title");
-            //selectionArrow = Game.Content.Load<Texture2D>("sprites/Selection");
             oldState_ = Keyboard.GetState();
             base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            //spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
+            
+            Console.WriteLine("LOAD!");
+
+            menubg = Game.Content.Load<Texture2D>("MainMenu");
+            selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
+            arrowLocation = new Vector2(900, 500);
+
+            base.LoadContent();
         }
 
         /// <summary>
@@ -99,16 +114,19 @@ namespace Platformer
                 selection++;
                 selection %= items.Length;
                 //soundBank.PlayCue("PacMAnEat1");
+                Console.WriteLine("Down!");
             }
             else if (newPressedKeys.Contains(Keys.Up))
             {
                 selection--;
                 selection = (selection < 0 ? items.Length - 1 : selection);
                 //soundBank.PlayCue("PacManEat2");
+                Console.WriteLine("Up!");
             }
             else if (newPressedKeys.Contains(Keys.Enter))
             {
                 menuAction();
+                Console.WriteLine("Enter!");
             }
 
             // Update keyboard state for next update
@@ -129,21 +147,24 @@ namespace Platformer
             spriteBatch.Begin();
 
             // Draw title
-            spriteBatch.Draw(title, new Vector2((graphics.PreferredBackBufferWidth / 2) - (title.Width / 2), 75), Color.White);
+            //spriteBatch.Draw(title, new Vector2((graphics.PreferredBackBufferWidth / 2) - (title.Width / 2), 75), Color.White);
+            spriteBatch.Draw(menubg, new Vector2(0, 0));
+            
 
             // Draw items
-            Vector2 itemPosition;
-            itemPosition.X = (graphics.PreferredBackBufferWidth / 2) - 100;
-            for (int i = 0; i < items.Length; i++)
-            {
+            //Vector2 itemPosition;
+            //itemPosition.X = (graphics.PreferredBackBufferWidth / 2) - 100;
+            //for (int i = 0; i < items.Length; i++)
+            //{
 
-                itemPosition.Y = (graphics.PreferredBackBufferHeight / 2) - 60 + (60 * i);
-                if (i == selection)
-                {
-                    spriteBatch.Draw(selectionArrow, new Vector2(itemPosition.X - 50, itemPosition.Y), Color.White);
-                }
-                spriteBatch.DrawString(menuItem, items[i], itemPosition, Color.Yellow);
-            }
+            //    itemPosition.Y = (graphics.PreferredBackBufferHeight / 2) - 60 + (60 * i);
+            //    if (i == selection)
+            //    {
+            //        spriteBatch.Draw(selectionArrow, new Vector2(itemPosition.X - 50, itemPosition.Y), Color.White);
+            //    }
+            //    spriteBatch.DrawString(menuItem, items[i], itemPosition, Color.Yellow);
+            //}
+            spriteBatch.Draw(selectionArrow, arrowLocation);
 
             spriteBatch.End();
         }
@@ -153,22 +174,22 @@ namespace Platformer
             Game.Components.Remove(this);
             switch (items[selection])
             {
-                case ("Resume"):
-                    Game.Components.Add(gameLoop);
-                    break;
+                //case ("Resume"):
+                //    Game.Components.Add(gameLoop);
+                //    break;
                 case ("New Game"):
                     Game.Components.Add(new GameLoop(Game));
                     break;
                 //case ("High Scores"):
                 //    Game.Components.Add(new HighScores(Game));
                 //    break;
-                case ("Quit"):
+                case ("Exit"):
                     Game.Exit();
                     break;
-                case ("Quit Game"):
-                    Game.Components.Add(new Menu(Game, null));
-                    //SaveHighScore(gameLoop_.Score);
-                    break;
+                //case ("Quit Game"):
+                //    Game.Components.Add(new Menu(Game, null));
+                //    SaveHighScore(gameLoop_.Score);
+                //    break;
                 default:
                     throw new ArgumentException("\"" + items[selection] + "\" is not a valid case");
 
