@@ -67,7 +67,7 @@ namespace Platformer
 
             menubg = Game.Content.Load<Texture2D>("MainMenu");
             selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
-            arrowLocation = new Vector2(900, 500);
+            arrowLocation = new Vector2(970, 520);
 
             base.LoadContent();
         }
@@ -133,7 +133,7 @@ namespace Platformer
             spriteBatch.Begin();
 
             // Draw title
-            spriteBatch.Draw(menubg, new Vector2(0, 0));
+            spriteBatch.Draw(menubg, new Rectangle(0, 0, 1280, 768), Color.White);
             
             // Draw items
             if (selection == 0)
@@ -142,7 +142,7 @@ namespace Platformer
             }
             if (selection == 1)
             {
-                spriteBatch.Draw(selectionArrow, new Vector2(900,620));
+                spriteBatch.Draw(selectionArrow, new Vector2(970, 640));
             }  
             
             spriteBatch.End();

@@ -32,6 +32,9 @@ namespace Platformer
         private ContentManager c;
         private SpriteEffects flip;
         private bool inAir;
+        private int time;
+        private bool stand;
+        private bool walk;
 
         public Player(int x, int y, int width, int height, bool inverted)
         {
@@ -45,6 +48,9 @@ namespace Platformer
             pushing = false;
             held = false;
             inAir = true;
+            time = 0;
+            stand = false;
+            walk = false;
             rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
 
             if (inverted)
@@ -136,6 +142,45 @@ namespace Platformer
 
         public void Move(Controls controls, List<Rectangle> collisionRects, GameTime gameTime)
         {
+            //Get time for timer for animations!
+            time += gameTime.ElapsedGameTime.Milliseconds;
+            if (time > 500 && x_vel > -.5 && x_vel < .5 )
+            {
+                if (!inverted)
+                {
+                    if (!stand)
+                    {
+                        LoadContent("Aaronstand2");
+                        stand = true;
+                        time -= 500;
+                    }
+                    else
+                    {
+                        LoadContent("Aaronstand1");
+                        stand = false;
+                        time -= 500;
+                    }
+                }
+            }
+
+            if (time > 100 && (x_vel <= -.5 || x_vel >= .5))
+            {
+                if (!inverted)
+                {
+                    if (!walk)
+                    {
+                        LoadContent("Aaronwalk1");
+                        walk = true;
+                        time -= 100;
+                    }
+                    else
+                    {
+                        LoadContent("Aaronwalk2");
+                        walk = false;
+                        time -= 100;
+                    }
+                }
+            }
 
             // Sideways Acceleration
             if (inverted)
@@ -236,7 +281,31 @@ namespace Platformer
                         if (inverted)
                             LoadContent("Benny.png");
                         else
-                            LoadContent("Aaronstand1.png");
+                        {
+                            if (x_vel < .5 && x_vel > -.5)
+                            {
+                                if (stand)
+                                {
+                                    LoadContent("Aaronstand2");
+                                }
+                                else
+                                {
+                                    LoadContent("Aaronstand1");
+                                }
+                            }
+                            else
+                            {
+                                if (walk)
+                                {
+                                    LoadContent("Aaronwalk1");
+                                }
+                                else
+                                {
+                                    LoadContent("Aaronwalk2");
+                                }
+                            }
+                        }
+                            
                     }
                     else
                     {
