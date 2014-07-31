@@ -14,8 +14,6 @@ using Microsoft.Xna.Framework.Storage;
 
 
 namespace Platformer
-
-
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
@@ -76,7 +74,7 @@ namespace Platformer
             //spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
-            
+
             Console.WriteLine("LOAD!");
 
             menubg = Game.Content.Load<Texture2D>("MainMenu");
@@ -113,6 +111,7 @@ namespace Platformer
             {
                 selection++;
                 selection %= items.Length;
+                Console.WriteLine(selection);
                 //soundBank.PlayCue("PacMAnEat1");
                 Console.WriteLine("Down!");
             }
@@ -120,6 +119,7 @@ namespace Platformer
             {
                 selection--;
                 selection = (selection < 0 ? items.Length - 1 : selection);
+                Console.WriteLine(selection);
                 //soundBank.PlayCue("PacManEat2");
                 Console.WriteLine("Up!");
             }
@@ -164,8 +164,16 @@ namespace Platformer
             //    }
             //    spriteBatch.DrawString(menuItem, items[i], itemPosition, Color.Yellow);
             //}
-            spriteBatch.Draw(selectionArrow, arrowLocation);
-
+            
+            if (selection == 0)
+            {
+                spriteBatch.Draw(selectionArrow, arrowLocation);
+            }
+            if (selection == 1)
+            {
+                spriteBatch.Draw(selectionArrow, new Vector2(900,620));
+            }  
+            
             spriteBatch.End();
         }
 
