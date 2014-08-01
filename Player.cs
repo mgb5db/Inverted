@@ -153,7 +153,12 @@ namespace Platformer
             {
                 if (!inverted)
                 {
-                    if (!stand)
+                    if (p2.getHold())
+                    {
+                        LoadContent("Aaronstandh");
+                        time -= 500;
+                    }
+                    else if (!stand && !p2.getHold())
                     {
                         LoadContent("Aaronstand2");
                         stand = true;
@@ -166,13 +171,45 @@ namespace Platformer
                         time -= 500;
                     }
                 }
+                else
+                {
+                    if (p2.getHold())
+                    {
+                        LoadContent("Bennystandh");
+                        time -= 500;
+                    }
+                    else if (!stand && !p2.getHold())
+                    {
+                        LoadContent("Bennystand2");
+                        stand = true;
+                        time -= 500;
+                    }
+                    else
+                    {
+                        LoadContent("Bennystand1");
+                        stand = false;
+                        time -= 500;
+                    }
+                }
             }
 
             if (time > 100 && (x_vel <= -.5 || x_vel >= .5))
             {
                 if (!inverted)
                 {
-                    if (!walk)
+                    if (!walk && p2.getHold())
+                    {
+                        LoadContent("Aaronwalkh1");
+                        walk = true;
+                        time -= 100;
+                    }
+                    else if (walk && p2.getHold())
+                    {
+                        LoadContent("Aaronwalkh2");
+                        walk = false;
+                        time -= 100;
+                    }
+                    else if (!walk)
                     {
                         LoadContent("Aaronwalk1");
                         walk = true;
@@ -181,6 +218,33 @@ namespace Platformer
                     else
                     {
                         LoadContent("Aaronwalk2");
+                        walk = false;
+                        time -= 100;
+                    }
+                }
+                else
+                {
+                    if (!walk && p2.getHold())
+                    {
+                        LoadContent("Bennywalkh1");
+                        walk = true;
+                        time -= 100;
+                    }
+                    else if (walk && p2.getHold())
+                    {
+                        LoadContent("Bennywalkh2");
+                        walk = false;
+                        time -= 100;
+                    }
+                    else if (!walk)
+                    {
+                        LoadContent("Bennywalk1");
+                        walk = true;
+                        time -= 100;
+                    }
+                    else
+                    {
+                        LoadContent("Bennywalk2");
                         walk = false;
                         time -= 100;
                     }
@@ -250,9 +314,23 @@ namespace Platformer
             if (inAir)
             {
                 if (inverted)
-                    LoadContent("Bennyjump.png");
+                {
+                    if (p2.getHold())
+                        LoadContent("Bennyjumph.png");
+                    else if (held)
+                        LoadContent("Bennyheld.png");
+                    else
+                        LoadContent("Bennyjump.png");
+                }
                 else
-                    LoadContent("Aaronjump.png");
+                {
+                    if (p2.getHold())
+                        LoadContent("Aaronjumph.png");
+                    else if (held)
+                        LoadContent("Aaronheld.png");
+                    else
+                        LoadContent("Aaronjump.png");
+                }
             }
 
 
@@ -284,14 +362,51 @@ namespace Platformer
                         inAir = false;
                         y_vel = 0;
                         if (inverted)
-                            LoadContent("Benny.png");
+                            if (x_vel < .5 && x_vel > -.5)
+                            {
+                                if (stand && !p2.getHold())
+                                {
+                                    LoadContent("Bennystand2");
+                                }
+                                else if (p2.getHold())
+                                {
+                                    LoadContent("Bennystandh");
+                                }
+                                else
+                                {
+                                    LoadContent("Bennystand1");
+                                }
+                            }
+                            else
+                            {
+                                if (!walk && p2.getHold())
+                                {
+                                    LoadContent("Bennywalkh1");
+                                }
+                                else if (walk && p2.getHold())
+                                {
+                                    LoadContent("Bennywalkh2");
+                                }
+                                else if (walk)
+                                {
+                                    LoadContent("Bennywalk1");
+                                }
+                                else
+                                {
+                                    LoadContent("Bennywalk2");
+                                }
+                            }
                         else
                         {
                             if (x_vel < .5 && x_vel > -.5)
                             {
-                                if (stand)
+                                if (stand && !p2.getHold())
                                 {
                                     LoadContent("Aaronstand2");
+                                }
+                                else if (p2.getHold())
+                                {
+                                    LoadContent("Aaronstandh");
                                 }
                                 else
                                 {
@@ -300,7 +415,15 @@ namespace Platformer
                             }
                             else
                             {
-                                if (walk)
+                                if (!walk && p2.getHold())
+                                {
+                                    LoadContent("Aaronwalkh1");
+                                }
+                                else if (walk && p2.getHold())
+                                {
+                                    LoadContent("Aaronwalkh2");
+                                }
+                                else if (walk)
                                 {
                                     LoadContent("Aaronwalk1");
                                 }
@@ -391,7 +514,7 @@ namespace Platformer
 
                 if (inverted)
                 {
-                    setY(p2.getY() - 58);
+                    setY(p2.getY() - 53);
                     setX(p2.getX());
                     if (controls.onPress(Keys.W, Buttons.LeftShoulder) && p2.getGrounded())
                     {
@@ -401,7 +524,7 @@ namespace Platformer
                 }
                 else
                 {
-                    setY(p2.getY() + 58);
+                    setY(p2.getY() + 53);
                     setX(p2.getX());
                     if (controls.onPress(Keys.Down, Buttons.RightShoulder) && p2.getGrounded())
                     {
