@@ -335,11 +335,14 @@ namespace Platformer
 
 
             // Check up/down collisions, then left/right
-            rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
-            checkYCollisions(collisionRects);
+            // If held, don't check
+            if (!held)
+            {
+                rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
+                checkYCollisions(collisionRects);
             
-
-
+            }
+                
         }
 
         private void checkYCollisions(List<Rectangle> collisionRects)
