@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Platformer
 {
@@ -35,6 +37,8 @@ namespace Platformer
         private int time;
         private bool stand;
         private bool walk;
+
+        public SoundEffect jumpEffect;
 
         public Player(int x, int y, int width, int height, bool inverted)
         {
@@ -118,6 +122,7 @@ namespace Platformer
                 image = content.Load<Texture2D>("Benny.png");
             else
                 image = content.Load<Texture2D>("Aaron.png");
+            jumpEffect = content.Load<SoundEffect>("jump.wav");
 
         }
 
@@ -340,6 +345,7 @@ namespace Platformer
                     y_vel = 9.8;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;
+                    jumpEffect.Play();
                 }
             }
             else
@@ -350,6 +356,7 @@ namespace Platformer
                     y_vel = -9.8;
                     jumpPoint = (int)(gameTime.TotalGameTime.TotalMilliseconds);
                     grounded = false;
+                    jumpEffect.Play();
                 }
             }
         }

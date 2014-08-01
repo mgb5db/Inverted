@@ -39,6 +39,10 @@ namespace Platformer
 
         KeyboardState oldState_;
 
+        SoundEffect select;
+        SoundEffect start;
+        Song theme;
+
         public Menu(Game game, GameLoop gameLoop)
             : base(game)
         {
@@ -68,6 +72,13 @@ namespace Platformer
             menubg = Game.Content.Load<Texture2D>("MainMenu");
             selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
             arrowLocation = new Vector2(970, 520);
+
+            theme = Game.Content.Load<Song>("WWWW.wav");
+            select = Game.Content.Load<SoundEffect>("select.wav");
+            start = Game.Content.Load<SoundEffect>("start.wav");
+
+            MediaPlayer.Volume = 1.0f;
+            MediaPlayer.Play(theme);
 
             base.LoadContent();
         }
@@ -99,22 +110,17 @@ namespace Platformer
             {
                 selection++;
                 selection %= items.Length;
-                Console.WriteLine(selection);
-                //soundBank.PlayCue("PacMAnEat1");
-                Console.WriteLine("Down!");
+                select.Play();
             }
             else if (newPressedKeys.Contains(Keys.Up))
             {
                 selection--;
                 selection = (selection < 0 ? items.Length - 1 : selection);
-                Console.WriteLine(selection);
-                //soundBank.PlayCue("PacManEat2");
-                Console.WriteLine("Up!");
+                select.Play();
             }
             else if (newPressedKeys.Contains(Keys.Enter))
             {
                 menuAction();
-                Console.WriteLine("Enter!");
             }
 
             // Update keyboard state for next update
@@ -156,6 +162,7 @@ namespace Platformer
             switch (items[selection])
             {
                 case ("New Game"):
+                    start.Play();
                     Game.Components.Add(new GameLoop(Game));
                     break;
                 case ("Exit"):
