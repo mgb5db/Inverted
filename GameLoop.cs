@@ -64,11 +64,14 @@ namespace Platformer
             //set our keyboardstate tracker update can change the gamestate on every cycle
             controls.Update();
 
+            //Reset level
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
                 this.Initialize();   
             }
 
+            //Back to menu
+            //TODO: Fix garbage collection. Dispose doesn't work apparently.
             if (controls.onPress(Keys.Escape, Buttons.Start))
             {
                 Game.Components.Add(new Menu(this.Game, null));

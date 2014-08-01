@@ -14,32 +14,33 @@ namespace Platformer
     {
         private bool moving;
         private bool grounded;
-        private bool air;
+        private bool inAir;
+        private bool stand;
+        private bool walk;
+        private bool held;
+        private bool inverted;
+
         private int speed;
         private int x_accel;
-        private double friction;
         public double x_vel;
         public double y_vel;
         public int movedX;
-        private bool pushing;
+
         public double gravity;
         public int maxFallSpeed;
+        private double friction;
         private int jumpPoint = 0;
+
         public Player p2;
-        private bool held;
         public Rectangle rect;
         private Vector2 normal;
         private Vector2 collisionDist = Vector2.Zero;
-        private bool inverted;
         private ContentManager c;
         private SpriteEffects flip;
-        private bool inAir;
-        private int time;
-        private bool stand;
-        private bool walk;
-
         public SoundEffect jumpEffect;
-
+        
+        private int time;
+        
         public Player(int x, int y, int width, int height, bool inverted)
         {
             this.spriteX = x;
@@ -47,9 +48,9 @@ namespace Platformer
             this.spriteWidth = width;
             this.spriteHeight = height;
             this.inverted = inverted;
+
             grounded = false;
             moving = false;
-            pushing = false;
             held = false;
             inAir = true;
             time = 0;
@@ -116,14 +117,12 @@ namespace Platformer
 
         public void LoadContent(ContentManager content)
         {
-
             c = content;
             if (inverted)
                 image = content.Load<Texture2D>("Benny.png");
             else
                 image = content.Load<Texture2D>("Aaron.png");
             jumpEffect = content.Load<SoundEffect>("jump.wav");
-
         }
 
         public void LoadContent(String imageName)
@@ -142,14 +141,15 @@ namespace Platformer
             Drop(controls);
             Move(controls, collisionRects, gameTime);
             Jump(controls, gameTime);
-
         }
 
         public void Move(Controls controls, List<Rectangle> collisionRects, GameTime gameTime)
         {
             //Get time for timer for animations!
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time > 500 && x_vel > -.5 && x_vel < .5 )
+
+            //Standing animations! 500ms interval
+            if (time > 500 && x_vel > -.5 && x_vel < .5)
             {
                 if (!inverted)
                 {
@@ -193,6 +193,7 @@ namespace Platformer
                 }
             }
 
+            //Walking Animations! 100ms interval
             if (time > 100 && (x_vel <= -.5 || x_vel >= .5))
             {
                 if (!inverted)
@@ -271,7 +272,6 @@ namespace Platformer
             }
             else
             {
-
                 if (controls.onPress(Keys.Right, Buttons.DPadRight))
                 {
                     x_accel += speed;
@@ -288,9 +288,7 @@ namespace Platformer
                     x_accel += speed;
             }
 
-
-            double playerFriction = pushing ? (friction * 3) : friction;
-            x_vel = x_vel * (1 - playerFriction) + x_accel * .10;
+            x_vel = x_vel * (1 - friction) + x_accel * .10;
             movedX = Convert.ToInt32(x_vel);
             spriteX += movedX;
 
@@ -307,7 +305,7 @@ namespace Platformer
                 y_vel += gravity;
                 if (y_vel > maxFallSpeed)
                     y_vel = maxFallSpeed;
-                spriteY += Convert.ToInt32(y_vel);  
+                spriteY += Convert.ToInt32(y_vel);
             }
 
             //grounded = false;
@@ -333,16 +331,14 @@ namespace Platformer
                 }
             }
 
-
             // Check up/down collisions, then left/right
             // If held, don't check
             if (!held)
             {
                 rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
                 checkYCollisions(collisionRects);
-            
             }
-                
+
         }
 
         private void checkYCollisions(List<Rectangle> collisionRects)
@@ -359,11 +355,13 @@ namespace Platformer
                     //If there are multiple collision make sure we only react to the most severe
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
-                    if (collisionDist.X == 0) 
+                    //Avoid being grounded on wall
+                    if (collisionDist.X == 0)
                     {
                         grounded = true;
                         inAir = false;
                         y_vel = 0;
+                        //Fixing animation in case of wall collision
                         if (inverted)
                             if (x_vel < .5 && x_vel > -.5)
                             {
@@ -436,19 +434,19 @@ namespace Platformer
                                 }
                             }
                         }
-                            
+
                     }
                     else
                     {
                         grounded = false;
                     }
-                        
+
                 }
 
             }
             if (!collided)
                 inAir = true;
-            
+
 
             //Update the players position
             double a = this.getX() + collisionDist.X;
@@ -486,6 +484,8 @@ namespace Platformer
                 }
             }
         }
+
+        //Holding. Jump within a certain threshold to hold.
         public void Hold(Controls controls)
         {
 
@@ -509,6 +509,8 @@ namespace Platformer
             }
 
         }
+
+        //Dropped.
         public void Drop(Controls controls)
         {
             if (held)

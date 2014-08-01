@@ -56,8 +56,11 @@ namespace Platformer
         /// </summary>
         public override void Initialize()
         {
-            //soundBank = (SoundBank)Game.Services.GetService(typeof(SoundBank));
+            //Selection of menu option
             selection = 0;
+
+            //String of menu options
+            //That don't matter too much because we cheese it with an image
             items = new string[] { "New Game", "Exit" };
             oldState_ = Keyboard.GetState();
             base.Initialize();
@@ -65,6 +68,8 @@ namespace Platformer
 
         protected override void LoadContent()
         {
+            //For Some reason getting the SpriteBatch from Services doesn't work.
+            //Just initialized it with a new one. No issues to far.
             //spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
