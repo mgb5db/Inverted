@@ -137,7 +137,11 @@ namespace Platformer
             }
 
             if (player1.spriteY > 768 || player2.spriteY < -64)
+            {
+                bgmi.Stop();
                 this.Initialize();
+            }
+                
 
             //Back to menu
             //TODO: Fix garbage collection. Dispose doesn't work apparently.
