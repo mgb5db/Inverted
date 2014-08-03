@@ -259,14 +259,25 @@ namespace Platformer
                     flip = SpriteEffects.None;
                 }
                 else if (controls.onRelease(Keys.D, Buttons.DPadRight))
-                    x_accel -= speed;
+                {
+                    if (x_vel == 0)
+                        x_accel = 0;
+                    else
+                        x_accel -= speed;
+                }
+                    
                 if (controls.onPress(Keys.A, Buttons.DPadLeft))
                 {
                     x_accel -= speed;
                     flip = SpriteEffects.FlipHorizontally;
                 }
                 else if (controls.onRelease(Keys.A, Buttons.DPadLeft))
-                    x_accel += speed;
+                {
+                    if (x_vel == 0)
+                        x_accel = 0;
+                    else
+                        x_accel += speed;
+                }
             }
             else
             {
@@ -276,14 +287,24 @@ namespace Platformer
                     flip = SpriteEffects.None;
                 }
                 else if (controls.onRelease(Keys.Right, Buttons.DPadRight))
-                    x_accel -= speed;
+                {
+                    if (x_vel == 0)
+                        x_accel = 0;
+                    else
+                        x_accel -= speed;
+                }
                 if (controls.onPress(Keys.Left, Buttons.DPadLeft))
                 {
                     x_accel -= speed;
                     flip = SpriteEffects.FlipHorizontally;
                 }
                 else if (controls.onRelease(Keys.Left, Buttons.DPadLeft))
-                    x_accel += speed;
+                {
+                    if (x_vel == 0)
+                        x_accel = 0;
+                    else
+                        x_accel += speed;
+                }
             }
 
             x_vel = x_vel * (1 - friction) + x_accel * .10;
@@ -334,8 +355,17 @@ namespace Platformer
             
             if (p2.getHold())
             {
-                rect = new Rectangle(spriteX, spriteY-64, spriteWidth, spriteHeight * 2);
-                checkYCollisions(collisionRects);
+                if (!inverted)
+                {
+                    rect = new Rectangle(spriteX, spriteY - 64, spriteWidth, spriteHeight * 2);
+                    checkYCollisions(collisionRects);
+                }
+                else
+                {
+                    rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight * 2);
+                    checkYCollisions(collisionRects);
+                }
+                
             }
             else if (!held)
             {

@@ -53,7 +53,7 @@ namespace Platformer
             Joystick.Init();
             Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
             controls = new Controls();
-
+            
             spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
@@ -74,7 +74,6 @@ namespace Platformer
             //Reset level
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
-                controls.Update();
                 this.Initialize();   
             }
 

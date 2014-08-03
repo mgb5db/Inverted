@@ -78,7 +78,7 @@ namespace Platformer
 
             //theme = Game.Content.Load<Song>("WWWW.wav");           
             select = Game.Content.Load<SoundEffect>("select.wav");
-            //start = Game.Content.Load<SoundEffect>("start.wav");
+            start = Game.Content.Load<SoundEffect>("start.wav");
 
             MediaPlayer.Volume = 1.0f;
             //MediaPlayer.Play(theme);
@@ -165,8 +165,9 @@ namespace Platformer
             switch (items[selection])
             {
                 case ("New Game"):
-                    //start.Play();
-                    Game.Components.Add(new GameLoop(Game, 1));
+                    start.Play();
+                    Game.Components.Add(new Screen(Game, "Tutorial1"));
+                    //Game.Components.Add(new GameLoop(Game, 1));
                     break;
                 case ("Exit"):
                     Game.Exit();
