@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Media;
 using Tao.Sdl;
 
 namespace Platformer
@@ -26,6 +27,9 @@ namespace Platformer
         GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
 
+        SoundEffect bgm;
+        SoundEffectInstance bgmi;
+
         public GameLoop(Game game, int level)
             : base(game)
         {
@@ -37,6 +41,11 @@ namespace Platformer
         {
             // TODO: use this.Content to load your game content here
             //background = Game.Content.Load<Texture2D>("map");
+            bgm = Game.Content.Load<SoundEffect>("7.wav");
+            bgmi = bgm.CreateInstance();
+            bgmi.IsLooped = true;
+            bgmi.Play();
+
             if (level == 1)
             {
                 player1 = new Player(50, 200, 32, 64, false);
@@ -54,16 +63,16 @@ namespace Platformer
             }
             else if (level == 2)
             {
-                player1 = new Player(100, 200, 32, 64, false);
-                player2 = new Player(100, 100, 32, 64, true);
+                player1 = new Player(50, 200, 32, 64, false);
+                player2 = new Player(50, 100, 32, 64, true);
                 player1.setP2(player2);
                 player2.setP2(player1);
 
-                end = new Endline(1200, 500, 32, 256);
+                end = new Endline(1216, 32, 32, 256);
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
-                map.LoadMap("Content/test.txt");
+                map.LoadMap("Content/level2.txt");
                 map.LoadTileSet(tileSheet);
                 map.PopulateCollisionLayer();
             }
@@ -102,8 +111,12 @@ namespace Platformer
                     Game.Components.Add(new Menu(this.Game, null));
                     Game.Components.Remove(this);
                 }
-                level++;
-                this.Initialize();
+                else
+                {
+                    level++;
+                    this.Initialize();
+                }
+                
             }
 
             if (player1.spriteY > 768 || player2.spriteY < -64)
@@ -114,6 +127,7 @@ namespace Platformer
             if (controls.onPress(Keys.Escape, Buttons.Start))
             {
                 Game.Components.Add(new Menu(this.Game, null));
+                bgmi.Stop();
                 Game.Components.Remove(this);
             }
                 
