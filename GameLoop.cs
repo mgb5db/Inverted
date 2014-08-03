@@ -19,24 +19,36 @@ namespace Platformer
         Player player2;
         Controls controls;
         Texture2D background;
+        int level;
 
         public static Texture2D tileSheet;
         GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
 
-        public GameLoop(Game game)
+        public GameLoop(Game game, int level)
             : base(game)
         {
             // TODO: Construct any child components here
+            this.level = level;
         }
 
         public override void Initialize()
         {
-            player1 = new Player(100, 200, 32, 64, false);
-            player2 = new Player(100, 100, 32, 64, true);
-            player1.setP2(player2);
-            player2.setP2(player1);
-            map = new Platformer.Level();
+            // TODO: use this.Content to load your game content here
+            //background = Game.Content.Load<Texture2D>("map");
+            if (level == 1)
+            {
+                player1 = new Player(100, 200, 32, 64, false);
+                player2 = new Player(100, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/test.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
 
             Joystick.Init();
             Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
@@ -46,12 +58,7 @@ namespace Platformer
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
 
-            // TODO: use this.Content to load your game content here
-            background = Game.Content.Load<Texture2D>("map");
-            tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
-            map.LoadMap("Content/test.txt");
-            map.LoadTileSet(tileSheet);
-            map.PopulateCollisionLayer();
+            
 
             player1.LoadContent(this.Game.Content);
             player2.LoadContent(this.Game.Content);
@@ -67,6 +74,7 @@ namespace Platformer
             //Reset level
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
+                controls.Update();
                 this.Initialize();   
             }
 
@@ -75,7 +83,7 @@ namespace Platformer
             if (controls.onPress(Keys.Escape, Buttons.Start))
             {
                 Game.Components.Add(new Menu(this.Game, null));
-                this.Dispose();
+                Game.Components.Remove(this);
             }
                 
             // TODO: Add your update logic here

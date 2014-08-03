@@ -25,14 +25,12 @@ namespace Platformer
     {
 
         GameLoop gameLoop;
-        SoundBank soundBank;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont menuItem;
         string[] items;
         int selection;
         bool gameStart;
-        Texture2D title;
+
         Texture2D selectionArrow;
         Texture2D menubg;
         Vector2 arrowLocation;
@@ -78,12 +76,12 @@ namespace Platformer
             selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
             arrowLocation = new Vector2(970, 520);
 
-            theme = Game.Content.Load<Song>("WWWW.wav");
+            //theme = Game.Content.Load<Song>("WWWW.wav");           
             select = Game.Content.Load<SoundEffect>("select.wav");
-            start = Game.Content.Load<SoundEffect>("start.wav");
+            //start = Game.Content.Load<SoundEffect>("start.wav");
 
             MediaPlayer.Volume = 1.0f;
-            MediaPlayer.Play(theme);
+            //MediaPlayer.Play(theme);
 
             base.LoadContent();
         }
@@ -167,8 +165,8 @@ namespace Platformer
             switch (items[selection])
             {
                 case ("New Game"):
-                    start.Play();
-                    Game.Components.Add(new GameLoop(Game));
+                    //start.Play();
+                    Game.Components.Add(new GameLoop(Game, 1));
                     break;
                 case ("Exit"):
                     Game.Exit();

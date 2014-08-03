@@ -12,7 +12,6 @@ namespace Platformer
 {
     class Player : Sprite
     {
-        private bool moving;
         private bool grounded;
         private bool inAir;
         private bool stand;
@@ -50,7 +49,6 @@ namespace Platformer
             this.inverted = inverted;
 
             grounded = false;
-            moving = false;
             held = false;
             inAir = true;
             time = 0;
@@ -333,7 +331,13 @@ namespace Platformer
 
             // Check up/down collisions, then left/right
             // If held, don't check
-            if (!held)
+            
+            if (p2.getHold())
+            {
+                rect = new Rectangle(spriteX, spriteY-64, spriteWidth, spriteHeight * 2);
+                checkYCollisions(collisionRects);
+            }
+            else if (!held)
             {
                 rect = new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight);
                 checkYCollisions(collisionRects);
