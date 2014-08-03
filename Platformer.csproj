@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls.cs" />
+    <Compile Include="Endline.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="GameLoop.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
