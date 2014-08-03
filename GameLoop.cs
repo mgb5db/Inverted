@@ -45,8 +45,22 @@ namespace Platformer
             bgmi = bgm.CreateInstance();
             bgmi.IsLooped = true;
             bgmi.Play();
+            if (level == 0)
+            {
+                player1 = new Player(50, 200, 32, 64, false);
+                player2 = new Player(50, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
 
-            if (level == 1)
+                end = new Endline(1216, 32, 32, 256);
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/level0.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
+            else if (level == 1)
             {
                 player1 = new Player(50, 200, 32, 64, false);
                 player2 = new Player(50, 100, 32, 64, true);
@@ -101,6 +115,7 @@ namespace Platformer
             //Reset level
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
+                bgmi.Stop();
                 this.Initialize();   
             }
 
@@ -108,12 +123,14 @@ namespace Platformer
             {
                 if (level == 2)
                 {
+                    bgmi.Stop();
                     Game.Components.Add(new Menu(this.Game, null));
                     Game.Components.Remove(this);
                 }
                 else
                 {
                     level++;
+                    bgmi.Stop();
                     this.Initialize();
                 }
                 

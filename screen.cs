@@ -58,7 +58,7 @@ namespace Platformer
                 start.Play();
                 if (name.Equals("Tutorial2"))
                 {
-                    Game.Components.Add(new GameLoop(Game, 1));
+                    Game.Components.Add(new GameLoop(Game, 0));
                     Game.Components.Remove(this);
                 }
                 else if (name.Equals("Tutorial1"))
