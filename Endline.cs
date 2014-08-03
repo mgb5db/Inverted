@@ -26,7 +26,7 @@ namespace Platformer
 
         public void LoadContent(ContentManager content)
         {
-           image = content.Load<Texture2D>("prep2.png");
+           image = content.Load<Texture2D>("finish.png");
         }
 
         public void Draw(SpriteBatch sb)
@@ -35,7 +35,7 @@ namespace Platformer
         }
         public bool checkCollision(Player player1, Player player2)
         {
-            if (this.rect.Intersects(player2.rect) || this.rect.Intersects(player1.rect))
+            if (this.rect.Intersects(player2.rect) && this.rect.Intersects(player1.rect))
             {
                 return true;
             }

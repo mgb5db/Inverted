@@ -18,13 +18,9 @@ namespace Platformer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        bool gameStart;
 
         Texture2D image;
 
-        KeyboardState oldState_;
-
-        SoundEffect select;
         SoundEffect start;
         Song theme;
         Controls controls;
@@ -40,6 +36,7 @@ namespace Platformer
         public override void Initialize()
         {
             controls = new Controls();
+            start = Game.Content.Load<SoundEffect>("start.wav");
             base.Initialize();
         }
 
@@ -58,12 +55,13 @@ namespace Platformer
 
             if (controls.onPress(Keys.Enter, Buttons.Start))
             {
+                start.Play();
                 if (name.Equals("Tutorial2"))
                 {
                     Game.Components.Add(new GameLoop(Game, 1));
                     Game.Components.Remove(this);
                 }
-                else
+                else if (name.Equals("Tutorial1"))
                 {
                     Game.Components.Add(new Screen(Game, "Tutorial2"));
                     Game.Components.Remove(this);

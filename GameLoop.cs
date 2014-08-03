@@ -17,6 +17,7 @@ namespace Platformer
         Level map;
         Player player1;
         Player player2;
+        Endline end;
         Controls controls;
         Texture2D background;
         int level;
@@ -38,10 +39,27 @@ namespace Platformer
             //background = Game.Content.Load<Texture2D>("map");
             if (level == 1)
             {
+                player1 = new Player(50, 200, 32, 64, false);
+                player2 = new Player(50, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
+
+                end = new Endline(1216, 32, 32, 256);
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/level1.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
+            else if (level == 2)
+            {
                 player1 = new Player(100, 200, 32, 64, false);
                 player2 = new Player(100, 100, 32, 64, true);
                 player1.setP2(player2);
                 player2.setP2(player1);
+
+                end = new Endline(1200, 500, 32, 256);
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -58,8 +76,8 @@ namespace Platformer
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics = (GraphicsDeviceManager)Game.Services.GetService(typeof(GraphicsDeviceManager));
 
-            
 
+            end.LoadContent(this.Game.Content);
             player1.LoadContent(this.Game.Content);
             player2.LoadContent(this.Game.Content);
 
@@ -76,6 +94,20 @@ namespace Platformer
             {
                 this.Initialize();   
             }
+
+            if (end.checkCollision(player1, player2))
+            {
+                if (level == 2)
+                {
+                    Game.Components.Add(new Menu(this.Game, null));
+                    Game.Components.Remove(this);
+                }
+                level++;
+                this.Initialize();
+            }
+
+            if (player1.spriteY > 768 || player2.spriteY < -64)
+                this.Initialize();
 
             //Back to menu
             //TODO: Fix garbage collection. Dispose doesn't work apparently.
@@ -100,7 +132,7 @@ namespace Platformer
             spriteBatch.Begin();
 
             map.DrawMap();
-
+            end.Draw(spriteBatch);
             player1.Draw(spriteBatch);
             player2.Draw(spriteBatch);
             spriteBatch.End();
