@@ -35,7 +35,9 @@ namespace Platformer
         }
         public bool checkCollision(Player player1, Player player2)
         {
-            if (this.rect.Intersects(player2.rect) && this.rect.Intersects(player1.rect))
+            if ((this.rect.Intersects(player2.rect) && this.rect.Intersects(player1.rect))
+                || ((this.rect.Intersects(player2.rect) && player1.getHold()) 
+                || ((this.rect.Intersects(player1.rect) && player2.getHold()))))
             {
                 return true;
             }
