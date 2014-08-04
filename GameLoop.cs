@@ -41,10 +41,13 @@ namespace Platformer
         {
             // TODO: use this.Content to load your game content here
             //background = Game.Content.Load<Texture2D>("map");
-            bgm = Game.Content.Load<SoundEffect>("7.wav");
-            bgmi = bgm.CreateInstance();
-            bgmi.IsLooped = true;
-            bgmi.Play();
+            if (bgmi == null)
+            {
+                bgm = Game.Content.Load<SoundEffect>("7.wav");
+                bgmi = bgm.CreateInstance();
+                bgmi.IsLooped = true;
+                bgmi.Play();
+            }
             if (level == 0)
             {
                 player1 = new Player(50, 200, 32, 64, false);
@@ -115,7 +118,7 @@ namespace Platformer
             //Reset level
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
-                bgmi.Stop();
+                //bgmi.Stop();
                 this.Initialize();   
             }
 
@@ -130,7 +133,7 @@ namespace Platformer
                 else
                 {
                     level++;
-                    bgmi.Stop();
+                    //bgmi.Stop();
                     this.Initialize();
                 }
                 
@@ -138,7 +141,7 @@ namespace Platformer
 
             if (player1.spriteY > 768 || player2.spriteY < -64)
             {
-                bgmi.Stop();
+                //bgmi.Stop();
                 this.Initialize();
             }
                 
