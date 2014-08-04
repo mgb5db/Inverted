@@ -59,7 +59,7 @@ namespace Platformer
 
             //String of menu options
             //That don't matter too much because we cheese it with an image
-            items = new string[] { "New Game", "Exit" };
+            items = new string[] { "New Game", "Credits", "Exit" };
             oldState_ = Keyboard.GetState();
             base.Initialize();
         }
@@ -74,7 +74,7 @@ namespace Platformer
 
             menubg = Game.Content.Load<Texture2D>("MainMenu");
             selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
-            arrowLocation = new Vector2(970, 520);
+            arrowLocation = new Vector2(970, 470);
 
             //theme = Game.Content.Load<Song>("WWWW.wav");           
             select = Game.Content.Load<SoundEffect>("select.wav");
@@ -151,8 +151,12 @@ namespace Platformer
             }
             if (selection == 1)
             {
-                spriteBatch.Draw(selectionArrow, new Vector2(970, 640));
-            }  
+                spriteBatch.Draw(selectionArrow, new Vector2(970, 570));
+            }
+            if (selection == 2)
+            {
+                spriteBatch.Draw(selectionArrow, new Vector2(970, 670));
+            }
             
             spriteBatch.End();
 
@@ -168,6 +172,10 @@ namespace Platformer
                     start.Play();
                     Game.Components.Add(new Screen(Game, "Tutorial1"));
                     //Game.Components.Add(new GameLoop(Game, 1));
+                    break;
+                case ("Credits"):
+                    start.Play();
+                    Game.Components.Add(new Screen(Game, "Credits"));
                     break;
                 case ("Exit"):
                     Game.Exit();

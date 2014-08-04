@@ -127,7 +127,7 @@ namespace Platformer
                 if (level == 2)
                 {
                     bgmi.Stop();
-                    Game.Components.Add(new Menu(this.Game, null));
+                    Game.Components.Add(new Screen(this.Game, "WinScreen"));
                     Game.Components.Remove(this);
                 }
                 else

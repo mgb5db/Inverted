@@ -66,6 +66,16 @@ namespace Platformer
                     Game.Components.Add(new Screen(Game, "Tutorial2"));
                     Game.Components.Remove(this);
                 }
+                else if (name.Equals("Credits"))
+                {
+                    Game.Components.Add(new Menu(this.Game, null));
+                    Game.Components.Remove(this);
+                }
+                else if (name.Equals("WinScreen"))
+                {
+                    Game.Components.Add(new Menu(this.Game, null));
+                    Game.Components.Remove(this);
+                }
             }
 
             base.Update(gameTime);
