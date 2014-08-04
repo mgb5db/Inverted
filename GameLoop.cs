@@ -40,7 +40,6 @@ namespace Platformer
         public override void Initialize()
         {
             // TODO: use this.Content to load your game content here
-            //background = Game.Content.Load<Texture2D>("map");
             if (bgmi == null)
             {
                 bgm = Game.Content.Load<SoundEffect>("7.wav");
@@ -56,6 +55,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level0bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -71,6 +71,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level1bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -86,6 +87,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level2bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -168,7 +170,7 @@ namespace Platformer
             GraphicsDevice.Clear(Color.FromNonPremultiplied(200, 200, 200, 255));
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-
+            spriteBatch.Draw(background, new Rectangle(0, 0, 1280, 768), Color.White);
             map.DrawMap();
             end.Draw(spriteBatch);
             player1.Draw(spriteBatch);
