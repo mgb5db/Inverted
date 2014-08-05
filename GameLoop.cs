@@ -47,6 +47,38 @@ namespace Platformer
                 bgmi.IsLooped = true;
                 bgmi.Play();
             }
+            if (level == -2)
+            {
+                player1 = new Player(50, 200, 32, 64, false);
+                player2 = new Player(50, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
+
+                end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level0bg");
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/level-2.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
+            if (level == -1)
+            {
+                player1 = new Player(50, 200, 32, 64, false);
+                player2 = new Player(50, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
+
+                end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level0bg");
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/level-1.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
             if (level == 0)
             {
                 player1 = new Player(50, 200, 32, 64, false);
