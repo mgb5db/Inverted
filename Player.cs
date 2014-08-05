@@ -390,7 +390,7 @@ namespace Platformer
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
                     //Avoid being grounded on wall
-                    if (collisionDist.X == 0)
+                    if (collisionDist.X == 0 || isOnTop(rect, collisionRects))
                     {
                         grounded = true;
                         inAir = false;
@@ -618,6 +618,31 @@ namespace Platformer
 
             ////There was a collision, return true
             return true;
+        }
+
+        //checks if the player is on top of a rectangle
+        public bool isOnTop(Rectangle r1, List<Rectangle> collisionRects)
+        {
+            foreach (Rectangle r in collisionRects)
+            {
+                if (inverted)
+                {
+                    if (r1.Top > r.Bottom - 5 &&
+                        r1.Top < r.Bottom + 5 &&
+                        r1.Left < r.Right - 5 &&
+                        r1.Right > r.Left + 5)
+                        return true;
+                }
+                else
+                {
+                    if (r1.Bottom > r.Top - 5 &&
+                        r1.Bottom < r.Top + 5 &&
+                        r1.Left < r.Right - 5 &&
+                        r1.Right > r.Left + 5)
+                        return true;
+                }
+            }
+            return false;
         }
 
     }
