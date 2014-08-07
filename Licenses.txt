@@ -1,10 +1,9 @@
 Mario Jumping Sound Recorded by Mike Koenig - License: Attribution 3.0
 Muted Metal Pot Hit Sound Recorded by Mike Koenig - License: Attribution 3.0
-WWWW by TeknoAXE - License: Attribution 3.0
 Start Beep by ACPascal - License: Attribution 3.0
-Space Ambience by Sonic Freak - Public Domain
 Casual Death Loose by GameAudio - License: Attribution 3.0
-
+gotItem by KastenFrosch - Public Domain
+ladenInnen by KastenFrosch - Public Domain
 
 =====
 Creative Commons Legal Code

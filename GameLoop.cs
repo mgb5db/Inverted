@@ -27,9 +27,9 @@ namespace Platformer
         GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
 
-        SoundEffect bgm;
-        SoundEffectInstance bgmi;
         SoundEffect death;
+        SoundEffect reset;
+        SoundEffect clear;
 
         public GameLoop(Game game, int level)
             : base(game)
@@ -42,14 +42,9 @@ namespace Platformer
         {
             // TODO: use this.Content to load your game content here
             death = Game.Content.Load<SoundEffect>("death.wav");
+            reset = Game.Content.Load<SoundEffect>("reset.wav");
+            clear = Game.Content.Load<SoundEffect>("clear.wav");
 
-            if (bgmi == null)
-            {
-                bgm = Game.Content.Load<SoundEffect>("space.wav");
-                bgmi = bgm.CreateInstance();
-                bgmi.IsLooped = true;
-                bgmi.Play();
-            }
             if (level == -3)
             {
                 player1 = new Player(50, 200, 32, 64, false);
@@ -187,7 +182,7 @@ namespace Platformer
             //Reset level
             if (controls.onPress(Keys.Back, Buttons.Back))
             {
-                //bgmi.Stop();
+                reset.Play();
                 this.Initialize();   
             }
 
@@ -195,14 +190,13 @@ namespace Platformer
             {
                 if (level == 3)
                 {
-                    bgmi.Stop();
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
                     Game.Components.Remove(this);
                 }
                 else
                 {
+                    clear.Play();
                     level++;
-                    //bgmi.Stop();
                     this.Initialize();
                 }
                 
@@ -210,7 +204,6 @@ namespace Platformer
 
             if (player1.spriteY > 768 || player2.spriteY < -64)
             {
-                //bgmi.Stop();
                 death.Play();
                 this.Initialize();
             }
@@ -219,7 +212,6 @@ namespace Platformer
             {
                 if (level == 3)
                 {
-                    bgmi.Stop();
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
                     Game.Components.Remove(this);
                 }
@@ -236,7 +228,6 @@ namespace Platformer
             if (controls.onPress(Keys.Escape, Buttons.Start))
             {
                 Game.Components.Add(new Menu(this.Game, null));
-                bgmi.Stop();
                 Game.Components.Remove(this);
             }
                 

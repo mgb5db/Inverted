@@ -37,7 +37,8 @@ namespace Platformer
         private ContentManager c;
         private SpriteEffects flip;
         public SoundEffect jumpEffect;
-        
+        public SoundEffect step;
+
         private int time;
         
         public Player(int x, int y, int width, int height, bool inverted)
@@ -121,6 +122,7 @@ namespace Platformer
             else
                 image = content.Load<Texture2D>("Aaron.png");
             jumpEffect = content.Load<SoundEffect>("jump.wav");
+            step = content.Load<SoundEffect>("step.wav");
         }
 
         public void LoadContent(String imageName)
@@ -194,6 +196,7 @@ namespace Platformer
             //Walking Animations! 100ms interval
             if (time > 100 && (x_vel <= -.5 || x_vel >= .5))
             {
+                
                 if (!inverted)
                 {
                     if (!walk && p2.getHold())
@@ -201,6 +204,8 @@ namespace Platformer
                         LoadContent("Aaronwalkh1");
                         walk = true;
                         time -= 100;
+                        if (grounded)
+                            step.Play();
                     }
                     else if (walk && p2.getHold())
                     {
@@ -213,6 +218,8 @@ namespace Platformer
                         LoadContent("Aaronwalk1");
                         walk = true;
                         time -= 100;
+                        if (grounded)
+                            step.Play();
                     }
                     else
                     {
@@ -228,6 +235,8 @@ namespace Platformer
                         LoadContent("Bennywalkh1");
                         walk = true;
                         time -= 100;
+                        if (grounded)
+                            step.Play();
                     }
                     else if (walk && p2.getHold())
                     {
@@ -240,6 +249,8 @@ namespace Platformer
                         LoadContent("Bennywalk1");
                         walk = true;
                         time -= 100;
+                        if (grounded)
+                            step.Play();
                     }
                     else
                     {
