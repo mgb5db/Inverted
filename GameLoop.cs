@@ -97,7 +97,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
-                background = Game.Content.Load<Texture2D>("level0bg");
+                background = Game.Content.Load<Texture2D>("level-1bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");

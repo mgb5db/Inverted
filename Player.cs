@@ -401,13 +401,14 @@ namespace Platformer
                     if (normal.Length() > collisionDist.Length())
                         collisionDist = normal;
                     //Avoid being grounded on wall
-                    if (collisionDist.X == 0 || isOnTop(rect, collisionRects))
+                    if ((collisionDist.X == 0 || isOnTop(rect, collisionRects)))
                     {
-                        grounded = true;
-                        inAir = false;
-                        y_vel = 0;
                         //Fixing animation in case of wall collision
-                        if (inverted)
+                        if (inverted && collisionDist.Y > 0)
+                        {
+                            grounded = true;
+                            inAir = false;
+                            y_vel = 0;
                             if (x_vel < .5 && x_vel > -.5)
                             {
                                 if (stand && !p2.getHold())
@@ -442,8 +443,12 @@ namespace Platformer
                                     LoadContent("Bennywalk2");
                                 }
                             }
-                        else
+                        }
+                        else if (!inverted && collisionDist.Y < 0)
                         {
+                            grounded = true;
+                            inAir = false;
+                            y_vel = 0;
                             if (x_vel < .5 && x_vel > -.5)
                             {
                                 if (stand && !p2.getHold())
