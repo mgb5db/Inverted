@@ -194,7 +194,22 @@ namespace Platformer
                 //bgmi.Stop();
                 this.Initialize();
             }
-                
+
+            if (controls.onPress(Keys.J, Buttons.LeftShoulder) && controls.onPress(Keys.M, Buttons.RightShoulder))
+            {
+                if (level == 3)
+                {
+                    bgmi.Stop();
+                    Game.Components.Add(new Screen(this.Game, "WinScreen"));
+                    Game.Components.Remove(this);
+                }
+                else
+                {
+                    level++;
+                    //bgmi.Stop();
+                    this.Initialize();
+                }
+            }
 
             //Back to menu
             //TODO: Fix garbage collection. Dispose doesn't work apparently.
