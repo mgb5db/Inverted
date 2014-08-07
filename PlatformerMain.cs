@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Tao.Sdl;
 #endregion
 
@@ -20,13 +22,7 @@ namespace Platformer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        // public static Texture2D tileSheet;
-        
-        //Level map;
-        //Player player1;
-        //Player player2;
-        //Controls controls;
-        //Texture2D background;
+
         public PlatformerMain()
         {
             graphics = new GraphicsDeviceManager(this);

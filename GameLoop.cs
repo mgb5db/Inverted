@@ -31,6 +31,9 @@ namespace Platformer
         SoundEffect reset;
         SoundEffect clear;
 
+        SoundEffect theme;
+        SoundEffectInstance bgm;
+
         public GameLoop(Game game, int level)
             : base(game)
         {
@@ -45,6 +48,15 @@ namespace Platformer
             reset = Game.Content.Load<SoundEffect>("reset.wav");
             clear = Game.Content.Load<SoundEffect>("clear.wav");
 
+            if (bgm == null)
+            {
+                theme = Game.Content.Load<SoundEffect>("space.wav");
+                bgm = theme.CreateInstance();
+                bgm.IsLooped = true;
+                bgm.Volume = 0.5f;
+                bgm.Play();
+            }
+
             if (level == -3)
             {
                 player1 = new Player(50, 200, 32, 64, false);
@@ -53,7 +65,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
-                background = Game.Content.Load<Texture2D>("level0bg");
+                background = Game.Content.Load<Texture2D>("level-3bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -69,7 +81,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
-                background = Game.Content.Load<Texture2D>("level0bg");
+                background = Game.Content.Load<Texture2D>("level-2bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -157,6 +169,22 @@ namespace Platformer
                 map.LoadTileSet(tileSheet);
                 map.PopulateCollisionLayer();
             }
+            else if (level == 4)
+            {
+                player1 = new Player(50, 200, 32, 64, false);
+                player2 = new Player(50, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
+
+                end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level0bg");
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/level4.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
 
             Joystick.Init();
             Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
@@ -188,9 +216,10 @@ namespace Platformer
 
             if (end.checkCollision(player1, player2))
             {
-                if (level == 3)
+                if (level == 4)
                 {
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
+                    bgm.Stop();
                     Game.Components.Remove(this);
                 }
                 else
@@ -210,8 +239,9 @@ namespace Platformer
 
             if (controls.onPress(Keys.J, Buttons.LeftShoulder) && controls.onPress(Keys.M, Buttons.RightShoulder))
             {
-                if (level == 3)
+                if (level == 4)
                 {
+                    bgm.Stop();
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
                     Game.Components.Remove(this);
                 }
@@ -227,6 +257,7 @@ namespace Platformer
             //TODO: Fix garbage collection. Dispose doesn't work apparently.
             if (controls.onPress(Keys.Escape, Buttons.Start))
             {
+                bgm.Stop();
                 Game.Components.Add(new Menu(this.Game, null));
                 Game.Components.Remove(this);
             }

@@ -39,7 +39,8 @@ namespace Platformer
 
         SoundEffect select;
         SoundEffect start;
-        Song theme;
+        SoundEffect theme;
+        SoundEffectInstance bgm;
 
         public Menu(Game game, GameLoop gameLoop)
             : base(game)
@@ -76,12 +77,16 @@ namespace Platformer
             selectionArrow = Game.Content.Load<Texture2D>("SelectArrow");
             arrowLocation = new Vector2(970, 470);
 
-            //theme = Game.Content.Load<Song>("WWWW.wav");           
+                     
             select = Game.Content.Load<SoundEffect>("select.wav");
             start = Game.Content.Load<SoundEffect>("start.wav");
-
-            MediaPlayer.Volume = 1.0f;
-            //MediaPlayer.Play(theme);
+            //if (bgm == null)
+            //{
+            //    theme = Game.Content.Load<SoundEffect>("space.wav");
+            //    bgm = theme.CreateInstance();
+            //    bgm.IsLooped = true;
+            //    bgm.Play();
+            //}
 
             base.LoadContent();
         }

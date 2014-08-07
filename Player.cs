@@ -538,7 +538,7 @@ namespace Platformer
             {
 
                 int sprite2Y = p2.getY() - 81;
-                if (spriteY > sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded() && !p2.getHold())
+                if (spriteY > sprite2Y && spriteY < sprite2Y + 32 && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded() && !p2.getHold())
                 {
                     held = true;
                 }
@@ -547,7 +547,7 @@ namespace Platformer
             {
 
                 int sprite2Y = p2.getY() + 81;
-                if (spriteY < sprite2Y && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded() && !p2.getHold())
+                if (spriteY < sprite2Y && spriteY > sprite2Y - 32 && (spriteX - 15 <= p2.getX() && spriteX + 5 >= p2.getX()) && p2.getGrounded() && !p2.getHold())
                 {
                     held = true;
                 }
