@@ -29,6 +29,7 @@ namespace Platformer
 
         SoundEffect bgm;
         SoundEffectInstance bgmi;
+        SoundEffect death;
 
         public GameLoop(Game game, int level)
             : base(game)
@@ -40,9 +41,11 @@ namespace Platformer
         public override void Initialize()
         {
             // TODO: use this.Content to load your game content here
+            death = Game.Content.Load<SoundEffect>("death.wav");
+
             if (bgmi == null)
             {
-                bgm = Game.Content.Load<SoundEffect>("7.wav");
+                bgm = Game.Content.Load<SoundEffect>("space.wav");
                 bgmi = bgm.CreateInstance();
                 bgmi.IsLooped = true;
                 bgmi.Play();
@@ -208,6 +211,7 @@ namespace Platformer
             if (player1.spriteY > 768 || player2.spriteY < -64)
             {
                 //bgmi.Stop();
+                death.Play();
                 this.Initialize();
             }
 
@@ -246,7 +250,7 @@ namespace Platformer
 
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.FromNonPremultiplied(200, 200, 200, 255));
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Rectangle(0, 0, 1280, 768), Color.White);
