@@ -185,6 +185,22 @@ namespace Platformer
                 map.LoadTileSet(tileSheet);
                 map.PopulateCollisionLayer();
             }
+            else if (level == 5)
+            {
+                player1 = new Player(100, 10, 32, 64, false);
+                player2 = new Player(100, 100, 32, 64, true);
+                player1.setP2(player2);
+                player2.setP2(player1);
+
+                end = new Endline(1216, 32, 32, 256);
+                background = Game.Content.Load<Texture2D>("level0bg");
+
+                map = new Platformer.Level();
+                tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
+                map.LoadMap("Content/level5.txt");
+                map.LoadTileSet(tileSheet);
+                map.PopulateCollisionLayer();
+            }
 
             Joystick.Init();
             Console.WriteLine("Number of joysticks: " + Sdl.SDL_NumJoysticks());
@@ -216,7 +232,7 @@ namespace Platformer
 
             if (end.checkCollision(player1, player2))
             {
-                if (level == 4)
+                if (level == 5)
                 {
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
                     bgm.Stop();
@@ -239,7 +255,7 @@ namespace Platformer
 
             if (controls.onPress(Keys.J, Buttons.LeftShoulder) && controls.onPress(Keys.M, Buttons.RightShoulder))
             {
-                if (level == 4)
+                if (level == 5)
                 {
                     bgm.Stop();
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
