@@ -30,6 +30,7 @@ namespace Platformer
         SoundEffect death;
         SoundEffect reset;
         SoundEffect clear;
+        SoundEffect win;
 
         SoundEffect theme;
         SoundEffectInstance bgm;
@@ -47,6 +48,7 @@ namespace Platformer
             death = Game.Content.Load<SoundEffect>("death.wav");
             reset = Game.Content.Load<SoundEffect>("reset.wav");
             clear = Game.Content.Load<SoundEffect>("clear.wav");
+            win = Game.Content.Load<SoundEffect>("win.wav");
 
             if (bgm == null)
             {
@@ -161,7 +163,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
-                background = Game.Content.Load<Texture2D>("level0bg");
+                background = Game.Content.Load<Texture2D>("level3bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -177,7 +179,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
-                background = Game.Content.Load<Texture2D>("level0bg");
+                background = Game.Content.Load<Texture2D>("level4bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -193,7 +195,7 @@ namespace Platformer
                 player2.setP2(player1);
 
                 end = new Endline(1216, 32, 32, 256);
-                background = Game.Content.Load<Texture2D>("level0bg");
+                background = Game.Content.Load<Texture2D>("level5bg");
 
                 map = new Platformer.Level();
                 tileSheet = Game.Content.Load<Texture2D>("FloorPanelTiles");
@@ -235,6 +237,7 @@ namespace Platformer
                 if (level == 5)
                 {
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
+                    win.Play();
                     bgm.Stop();
                     Game.Components.Remove(this);
                 }
@@ -258,6 +261,7 @@ namespace Platformer
                 if (level == 5)
                 {
                     bgm.Stop();
+                    win.Play();
                     Game.Components.Add(new Screen(this.Game, "WinScreen"));
                     Game.Components.Remove(this);
                 }
